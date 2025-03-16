@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Upload } from "lucide-react"
-import { CldUploadWidget } from 'next-cloudinary';
+import { CldUploadWidget, CloudinaryUploadWidgetInfo, CloudinaryUploadWidgetResults } from 'next-cloudinary';
 import type React from "react"
 const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
 interface FileUploadProps {
@@ -10,10 +10,15 @@ interface FileUploadProps {
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
-    const onUpload = (result: any) => {
-        onChange(result.info.secure_url)
-        console.log(result.info.secure_url);
-    };
+    const onUpload = (result: CloudinaryUploadWidgetResults) => {
+        if (result.event === "success") {
+          const info = result.info as CloudinaryUploadWidgetInfo; // ✅ Ensure info is correctly typed
+          if (info && "secure_url" in info) {
+            onChange(info.secure_url);
+            console.log(info.secure_url);
+          }
+        }
+      };
     return (
         <div
             className={`border-2 border-dashed rounded-lg p-4 text-center `}
