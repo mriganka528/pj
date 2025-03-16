@@ -1,46 +1,53 @@
-"use client"
-
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { LayoutDashboard, FileText, Calendar, Settings } from "lucide-react"
-import { UserButton } from "@clerk/nextjs"
+import React from 'react'
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+import { Calendar, FileText, LayoutDashboard, PanelTopOpen, Settings, User } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils'
 
 const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Content", href: "/admin/content", icon: FileText },
-    { name: "Schedule", href: "/admin/schedule", icon: Calendar },
+    { name: "Notices", href: "/admin/notices", icon: Calendar },
+    { name: "Users", href: "/admin/users", icon: User },
     { name: "Settings", href: "/admin/settings", icon: Settings },
 ]
-
 const Sidebar = () => {
     const pathname = usePathname()
 
     return (
-        <nav className=" bg-white w-svw flex justify-between px-6 py-4  shadow-md">
-            <div >
-                <h1 className="text-2xl font-bold">Admin Page</h1>
-            </div>
-            <ul className="space-x-2  flex ">
-                {navItems.map((item) => (
-                    <li key={item.name}>
-                        <Link
-                            href={item.href}
-                            className={cn(
-                                "flex items-center space-x-3 rounded-lg px-3 py-2 text-gray-600 hover:bg-gray-100",
-                                pathname === item.href && "bg-gray-100 text-blue-600",
-                            )}
-                        >
-                            <item.icon className="h-5 w-5" />
-                            <span>{item.name}</span>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-            <div className=" flex justify-center items-center">
-                <UserButton />
-            </div>
-        </nav>
+        <div className='min-[768px]:hidden'>
+            <Sheet>
+                <SheetTrigger><PanelTopOpen /></SheetTrigger>
+                <SheetContent side={'top'} className='flex flex-col items-center justify-center space-y-4 py-10'>
+                    <SheetTitle className='text-xl'>BulletinX</SheetTitle>
+                    <ul className='flex flex-col  justify-between space-y-12 py-14'>
+                        {navItems.map((item) => (
+                            <li key={item.name}>
+                                <Link
+                                    href={item.href}
+                                    className={cn(
+                                        "flex items-center space-x-3 rounded-lg px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors",
+                                        pathname === item.href && "bg-muted text-primary font-medium",
+                                    )}
+                                >
+                                    <item.icon className="h-5 w-5" />
+                                    <SheetClose>
+                                        <span>{item.name}</span>
+                                    </SheetClose>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </SheetContent>
+            </Sheet>
+        </div>
     )
 }
 

@@ -20,7 +20,14 @@ model Notice {
   status      Status
   category    Category
   dateCreated DateTime @default(now())
-  noticeURL    String
+  noticeURL   String
+  priority    Priority
+}
+
+enum Priority {
+  High
+  Medium
+  Low
 }
 
 enum Status {
@@ -41,4 +48,18 @@ enum Category {
   Technology
   Library
   Administrative
+}
+
+model SuscribedUser {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  feedback  String
+}
+
+model Admin {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  email String
 }

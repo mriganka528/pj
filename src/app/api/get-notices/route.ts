@@ -1,0 +1,28 @@
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+import { auth } from "@clerk/nextjs/server";
+
+const prisma = new PrismaClient();
+
+export async function GET() {
+  try {
+    //  Authenticate the user
+    const getToken = await auth();
+    if (!getToken) {
+      console.log("Not authenticated");
+      return NextResponse.json(
+        { success: false, message: "Authentication error" },
+        { status: 401 }
+      );
+    }
+
+    const notices = await prisma.notice.findMany({
+      orderBy: { dateCreated: "desc" },
+    });
+
+    return NextResponse.json({ success: true, notices });
+  } catch (error) {
+    console.error("Error fetching notices:", error);
+    return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 });
+  }
+}

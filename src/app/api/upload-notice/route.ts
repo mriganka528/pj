@@ -1,8 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { PrismaClient, Status, Category } from "@prisma/client";
-import path from "path";
-import fs from "fs";
+import { PrismaClient, Status, Category, Priority } from "@prisma/client";
+
 import { noticeSchema } from "@/schemas/notice/noticeSchema";
 
 const prisma = new PrismaClient();
@@ -21,17 +20,16 @@ export async function POST(req: Request) {
 
         //  Parse FormData
         const formData = await req.formData();
-
         const title = formData.get("title") as string;
         const content = formData.get("content") as string;
         const status = formData.get("status")?.toString().toUpperCase() as Status;
         const category = formData.get("category") as Category;
-        const file = formData.get("file") as File;
+        const fileUrl = formData.get("fileUrl") as string;
+        const priority = formData.get("priority") as Priority
 
-        console.log("Received data:", { title, content, status, category, file });
 
         // Validate form data using Zod
-        const validation = noticeSchema.safeParse({ title, content, status, category, file });
+        const validation = noticeSchema.safeParse({ title, content, status, category, fileUrl,priority });
         if (!validation.success) {
             console.error("Validation Error:", validation.error.errors);
             return NextResponse.json(
@@ -40,27 +38,15 @@ export async function POST(req: Request) {
             );
         }
 
-        //  Save file to the local directory
-        const uploadDir = path.join(process.cwd(), "public/uploads");
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
-        }
 
-        const filePath = path.join(uploadDir, `${Date.now()}-${file.name}`);
-        const buffer = Buffer.from(await file.arrayBuffer());
-        fs.writeFileSync(filePath, buffer);
-
-        //  Construct file URL
-        const noticeURL = `/uploads/${Date.now()}-${file.name}`;
-
-        //  Save notice details in Prisma
         const newNotice = await prisma.notice.create({
             data: {
                 title,
                 content,
                 status,
                 category,
-                noticeURL,
+                noticeURL: fileUrl,
+                priority
             },
         });
 

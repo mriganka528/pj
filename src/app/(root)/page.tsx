@@ -4,7 +4,7 @@ import React from 'react'
 const page = () => {
   return (
     <div>
-      <div className='flex justify-between w-full'>
+      <div className='flex justify-between w-full px-3'>
         Notice page
         <Link href={'/sign-in'}>Sign in</Link>
       </div>
