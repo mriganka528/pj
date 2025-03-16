@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client"
 import { Category } from '@prisma/client';
 const getTotalCategories = async () => {
     const totalCategories = Object.keys(Category).length;
