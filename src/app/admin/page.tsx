@@ -10,7 +10,7 @@ import getTotalScheduledNotice from "@/lib/getTotalScheduledNotice"
 import getTotalCategories from "@/lib/getTotalCategories"
 import { Category } from "@prisma/client"
 import getCategoryDetails from "@/lib/categoryDetails/getCategoryDetails"
-import { motion } from "framer-motion"
+
 export default async function Dashboard() {
 
   const totalNotice = await getTotalNotice()
@@ -54,17 +54,6 @@ export default async function Dashboard() {
       icon: Cpu
     }
   ]
-  const categories: Category[] = [
-    Category.Administrative,
-    Category.CampusLife,
-    Category.Career,
-    Category.Events,
-    Category.HealthAndWellness,
-    Category.Library,
-    Category.Sports,
-    Category.StudentServices,
-    Category.Technology
-  ];
 
   return (
     <div className="space-y-6">
@@ -147,17 +136,17 @@ export default async function Dashboard() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {categoryManu.map((category) => (
-                <Card >
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">{category.name}</CardTitle>
-                    <category.icon className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{getCategoryDetails(category.name)}</div>
-                    <p className="text-xs text-muted-foreground">Active notices</p>
-                  </CardContent>
-                </Card>
+            {categoryManu.map((category, index) => (
+              <Card key={index}>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">{category.name}</CardTitle>
+                  <category.icon className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{getCategoryDetails(category.name)}</div>
+                  <p className="text-xs text-muted-foreground">Active notices</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </CardContent>

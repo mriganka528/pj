@@ -55,7 +55,7 @@ const UploadNoticeComponent = () => {
         data.append("fileUrl", fileUrl);
         data.append("priority", priority);
         try {
-            const result = await axios.post('/api/upload-notice', data, {
+            await axios.post('/api/upload-notice', data, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             toast.success("Notice uploaded successfully");

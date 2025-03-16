@@ -58,7 +58,7 @@ const UpdateNoticeComponent = ({ notice }: { notice: Notice }) => {
         data.append("priority", priority);
 
         try {
-            const result = await axios.patch(`/api/update-notice?id=${notice.id}`, data, {
+             await axios.patch(`/api/update-notice?id=${notice.id}`, data, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             toast.success("Notice updated successfully");
