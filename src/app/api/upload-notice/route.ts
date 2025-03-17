@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { PrismaClient, Status, Category, Priority } from "@prisma/client";
 
@@ -9,8 +9,8 @@ const prisma = new PrismaClient();
 export async function POST(req: Request) {
     try {
         //  Authenticate the user
-        const getToken = await auth();
-        if (!getToken) {
+        const user = await currentUser()
+        if (!user) {
             console.log("Not authenticated");
             return NextResponse.json(
                 { success: false, message: "Authentication error" },
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
 
         // Validate form data using Zod
-        const validation = noticeSchema.safeParse({ title, content, status, category, fileUrl,priority });
+        const validation = noticeSchema.safeParse({ title, content, status, category, fileUrl, priority });
         if (!validation.success) {
             console.error("Validation Error:", validation.error.errors);
             return NextResponse.json(

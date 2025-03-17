@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 
 const prisma = new PrismaClient();
 
 export async function GET() {
   try {
     //  Authenticate the user
-    const getToken = await auth();
-    if (!getToken) {
+    const user = await currentUser()
+    console.log(user)
+    if (!user) {
       console.log("Not authenticated");
       return NextResponse.json(
         { success: false, message: "Authentication error" },

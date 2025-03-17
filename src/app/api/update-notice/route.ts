@@ -1,12 +1,13 @@
 import { noticeSchema } from "@/schemas/notice/noticeSchema";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { Category, Priority, PrismaClient, Status } from "@prisma/client";
 import { NextResponse } from "next/server";
 const prisma = new PrismaClient()
 export async function PATCH(req: Request) {
     try {
-        const getToken = await auth();
-        if (!getToken) {
+        const user = await currentUser()
+
+        if (!user) {
             console.log("Not authenticated");
             return NextResponse.json(
                 { success: false, message: "Authentication error" },

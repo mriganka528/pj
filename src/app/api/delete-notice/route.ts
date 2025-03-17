@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -7,8 +7,9 @@ const prisma = new PrismaClient();
 export async function DELETE(req: Request) {
     try {
         // Check authentication
-        const getToken = await auth();
-        if (!getToken) {
+        const user = await currentUser()
+
+        if (!user) {
             console.log("Not authenticated");
             return NextResponse.json(
                 { success: false, message: "Authentication error" },
