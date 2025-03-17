@@ -13,38 +13,38 @@ import { motion } from "framer-motion"
 const Page = () => {
   const [notices, setNotices] = useState<Notice[]>([]);
   const [loading, setLoading] = useState(true);
+  const fetchNotices = async () => {
+    try {
+      const response = await axios.get("/api/get-notices");
+      if (response.data.success) {
+        const allNotices = response.data.notices;
 
-  useEffect(() => {
-    const fetchNotices = async () => {
-      try {
-        const response = await axios.get("/api/get-notices");
-        if (response.data.success) {
-          const allNotices = response.data.notices;
+        const currentDate = new Date()
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+        console.log("Helooo", allNotices)
+        // Filter notices for the current month
+        const filteredNotices = allNotices.filter((notice: Notice) => {
+          const noticeDate = new Date(notice.dateCreated); // Ensure 'uploadDate' is in ISO format in DB
+          return (
+            noticeDate.getMonth() === currentMonth &&
+            noticeDate.getFullYear() === currentYear
+          );
+        });
+        console.log("Helooo$$$", filteredNotices)
 
-          const currentDate = new Date()
-          const currentMonth = currentDate.getMonth();
-          const currentYear = currentDate.getFullYear();
-
-          // Filter notices for the current month
-          const filteredNotices = allNotices.filter((notice: Notice) => {
-            const noticeDate = new Date(notice.dateCreated); // Ensure 'uploadDate' is in ISO format in DB
-            return (
-              noticeDate.getMonth() === currentMonth &&
-              noticeDate.getFullYear() === currentYear
-            );
-          });
-          setNotices(filteredNotices);
-          console.log("NNNN :", notices)
-        }
-      } catch (error) {
-        console.error("Failed to fetch notices:", error);
-      } finally {
-        setLoading(false);
+        setNotices(filteredNotices);
+        console.log("NNNN :", notices)
       }
-    };
-
+    } catch (error) {
+      console.error("Failed to fetch notices:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchNotices();
-  }, []);
+  }, [notices]);
 
   const handleDelete = async (notice_id: string) => {
     try {

@@ -8,7 +8,6 @@ export async function GET() {
   try {
     //  Authenticate the user
     const user = await currentUser()
-    console.log(user)
     if (!user) {
       console.log("Not authenticated");
       return NextResponse.json(
