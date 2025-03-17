@@ -33,7 +33,7 @@ const Page = () => {
         });
         console.log("Helooo$$$", filteredNotices)
 
-        setNotices(filteredNotices);
+        setNotices(() => filteredNotices);
         console.log("NNNN :", notices)
       }
     } catch (error) {
@@ -44,7 +44,7 @@ const Page = () => {
   };
   useEffect(() => {
     fetchNotices();
-  }, [notices]);
+  }, []);
 
   const handleDelete = async (notice_id: string) => {
     try {
