@@ -55,6 +55,7 @@ const Page = () => {
         toast.success("Notice deleted successfully")
       }
     } catch (error) {
+      console.error(error)
       toast.error("Failed to delete the notice")
     }
   };
