@@ -63,6 +63,7 @@ const UploadNoticeComponent = () => {
             setSelectedFiles("")
             router.refresh();
         } catch (error) {
+            console.log(error)
             toast.error("Failed to save the notice")
         }
         setSubmitting(false)

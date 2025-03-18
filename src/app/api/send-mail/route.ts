@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { sendMail } from "@/lib/sendMail";
 import { currentUser } from "@clerk/nextjs/server";
 import { emailSchema } from "@/schemas/emailSection/emailSchema";
-export async function POST(request: Request, response: Response) {
+export async function POST(request: Request) {
     try {
         const user = await currentUser()
         if (!user) {

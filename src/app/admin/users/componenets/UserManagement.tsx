@@ -82,6 +82,7 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
                 toast.success("Notification is sent successfully")
             }
         } catch (error) {
+            console.error(error)
             toast.error("failed to sent message")
         } finally {
 

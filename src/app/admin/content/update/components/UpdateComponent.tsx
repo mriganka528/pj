@@ -64,6 +64,7 @@ const UpdateNoticeComponent = ({ notice }: { notice: Notice }) => {
             toast.success("Notice updated successfully");
             router.back();
         } catch (error) {
+            console.error(error)
           toast.error("failed to update the notice")
         }
         setSubmitting(false)

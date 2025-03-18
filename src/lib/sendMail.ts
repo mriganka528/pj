@@ -1,5 +1,5 @@
 
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 function extractUsername(email: string) {
     return email.split("@")[0];

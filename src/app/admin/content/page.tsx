@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import UploadNoticeComponent from "./components/UploadNoticeComponent";
 import { Notice } from "@prisma/client";
-import { RefreshCcw } from "lucide-react";
 import NoticeCard from "../components/NoticeCard";
 import { toast } from "sonner";
 import { motion } from "framer-motion"
