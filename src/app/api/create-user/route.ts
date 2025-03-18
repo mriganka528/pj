@@ -8,7 +8,6 @@ export async function POST(req: Request) {
         const body = await req.json();
         const validationResult = userSchema.safeParse(body);
         if (!validationResult.success) {
-            console.error("Validation Error:", validationResult.error.errors);
             return NextResponse.json(
                 { success: false, message: "Validation failed", errors: validationResult.error.errors },
                 { status: 400 }

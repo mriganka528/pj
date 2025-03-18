@@ -18,9 +18,9 @@ export async function DELETE(req: Request) {
 
         // Parse request body
         const body = await req.json();
-        const { notice_id }: { notice_id: string } = body;
-
-        if (!notice_id) {
+        const { user_id }: { user_id: string } = await body;
+        console.log("user_id", user_id)
+        if (!user_id) {
             return NextResponse.json(
                 { success: false, message: "Notice ID is required" },
                 { status: 400 }
@@ -28,8 +28,8 @@ export async function DELETE(req: Request) {
         }
 
         // Check if notice exists
-        const existingNotice = await prisma.notice.findUnique({
-            where: { id: notice_id },
+        const existingNotice = await prisma.suscribedUser.findUnique({
+            where: { id: user_id },
         });
 
         if (!existingNotice) {
@@ -40,8 +40,8 @@ export async function DELETE(req: Request) {
         }
 
         // Delete notice
-        const deletedNotice = await prisma.notice.delete({
-            where: { id: notice_id },
+        const deletedNotice = await prisma.suscribedUser.delete({
+            where: { id: user_id },
         });
 
         return NextResponse.json(

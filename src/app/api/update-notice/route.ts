@@ -8,7 +8,6 @@ export async function PATCH(req: Request) {
         const user = await currentUser()
 
         if (!user) {
-            console.log("Not authenticated");
             return NextResponse.json(
                 { success: false, message: "Authentication error" },
                 { status: 401 }
@@ -21,7 +20,6 @@ export async function PATCH(req: Request) {
                 success: false, message: "Notice id not passed currectly"
             }, { status: 404 })
         }
-        console.log("IDDDDD :", notice_id)
 
         const find_notice = await prisma.notice.findUnique({
             where: {
@@ -44,7 +42,6 @@ export async function PATCH(req: Request) {
 
         const validation = noticeSchema.safeParse({ title, content, status, category, fileUrl, priority });
         if (!validation.success) {
-            console.error("Validation Error:", validation.error.errors);
             return NextResponse.json(
                 { success: false, message: "Validation failed", errors: validation.error.errors },
                 { status: 400 }
@@ -70,7 +67,6 @@ export async function PATCH(req: Request) {
             { status: 200 }
         );
     } catch (error) {
-        console.error("Upload Error:", error);
         return NextResponse.json(
             { success: false, message: "Internal server error" },
             { status: 500 }

@@ -14,7 +14,7 @@ const page = async ({ params: paramsPromise }: { params: Promise<{ noticeId: str
         return <div>Notice not found</div>
     }
     return (
-        <div >
+        <div  className='px-6 sm:px-10 md:px-16'>
          <UpdateNoticeComponent notice={fetchedNotice} />
         </div>
 

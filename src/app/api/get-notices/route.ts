@@ -9,7 +9,6 @@ export async function GET() {
     //  Authenticate the user
     const user = await currentUser()
     if (!user) {
-      console.log("Not authenticated");
       return NextResponse.json(
         { success: false, message: "Authentication error" },
         { status: 401 }
@@ -22,7 +21,6 @@ export async function GET() {
 
     return NextResponse.json({ success: true, notices });
   } catch (error) {
-    console.error("Error fetching notices:", error);
     return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 });
   }
 }

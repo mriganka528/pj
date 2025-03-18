@@ -2,7 +2,7 @@
 import React from 'react'
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Search, Mail, Calendar } from "lucide-react"
+import { Search, Mail, Calendar, Trash2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -13,6 +13,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { SuscribedUser } from '@prisma/client'
+import { useMobile } from './UseMobile'
+import axios from 'axios'
+import { toast } from 'sonner'
+import { AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialog, AlertDialogContent, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) => {
     const [users, setUsers] = useState<SuscribedUser[]>([])
     const [filteredUsers, setFilteredUsers] = useState<SuscribedUser[]>([])
@@ -20,8 +24,15 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
     const [monthFilter, setMonthFilter] = useState<string>("all")
     const [loading, setLoading] = useState(true)
     const [selectedUser, setSelectedUser] = useState<SuscribedUser | null>(null)
-    const [emailContent, setEmailContent] = useState("")
+    const [emailContent, setEmailContent] = useState<string>("")
+    const [emailSubject, setEmailSubject] = useState<string>("")
+    const [isDeleting, setIsDeleating] = useState<boolean>(false);
+    const isMobile = useMobile()
 
+    // Generate Gmail URL for sending email
+    const getGmailUrl = (email: string) => {
+        return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`
+    }
     // Simulate loading data
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -58,18 +69,25 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
     }, [searchQuery, monthFilter, users])
 
     // Handle sending email
-    const handleSendEmail = () => {
+    const handleSendEmail = async () => {
         if (!selectedUser || !emailContent.trim()) return
+        try {
 
-        // In a real application, this would send the email via an API
-        console.log(`Sending email to ${selectedUser.email}:`, emailContent)
+            const response = await axios.post('/api/send-mail', {
+                emailAddress: selectedUser.email,
+                subject: emailSubject,
+                message: emailContent
+            })
+            if (response.status === 200) {
+                toast.success("Notification is sent successfully")
+            }
+        } catch (error) {
+            toast.error("failed to sent message")
+        } finally {
 
-        // Reset the form
-        setEmailContent("")
-        setSelectedUser(null)
-
-        // Show success message (in a real app, you'd use a toast notification)
-        alert(`Email sent to ${selectedUser.name}!`)
+            setEmailContent("")
+            setSelectedUser(null)
+        }
     }
 
     // Get unique months from user data
@@ -80,6 +98,26 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
         })
         return ["All", ...Array.from(new Set(months))]
     }
+
+    const handleDelete = async (user_id: string) => {
+        setIsDeleating(true);
+        try {
+            await axios.delete('/api/remove-user', {
+                data: { user_id }
+            });
+    
+            // Update state to remove the deleted user
+            setUsers((prevUsers) => prevUsers.filter(user => user.id !== user_id));
+            setFilteredUsers((prevUsers) => prevUsers.filter(user => user.id !== user_id));
+    
+            toast("User deleted successfully");
+        } catch (error) {
+            console.log(error);
+            toast.error("Failed to delete user");
+        } finally {
+            setIsDeleating(false);
+        }
+    };
     return (
         <div className="space-y-6">
             {/* Search and Filter Section */}
@@ -157,9 +195,30 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
                         >
                             <Card className="h-full overflow-hidden">
                                 <CardContent className="p-6 space-y-4 h-full flex flex-col">
-                                    <div>
-                                        <h3 className="font-semibold text-lg">{user.name}</h3>
-                                        <p className="text-sm text-muted-foreground">{user.email}</p>
+                                    <div className='flex justify-between'>
+                                        <div>
+                                            <h3 className="font-semibold text-lg">{user.name}</h3>
+                                            <p className="text-sm text-muted-foreground">{user.email}</p>
+                                        </div>
+                                        <div className="self-end sm:self-auto">
+                                            <AlertDialog>
+                                                <AlertDialogTrigger asChild>
+                                                    <Button variant="secondary" size="sm" disabled={isDeleting}>
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                        <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction className='bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90' onClick={() => { handleDelete(user.id) }}>{isDeleting ? "Deleting..." : "Continue"}</AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </div>
                                     </div>
 
                                     <div className="flex-grow">
@@ -175,39 +234,66 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
                                                 day: "numeric",
                                             })}
                                         </Badge>
+                                        <div>
 
-                                        <Dialog>
-                                            <DialogTrigger asChild>
-                                                <Button size="icon" variant="ghost" onClick={() => setSelectedUser(user)}>
-                                                    <Mail className="h-4 w-4" />
-                                                    <span className="sr-only">Email {user.name}</span>
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Button size="icon" variant="ghost" onClick={() => setSelectedUser(user)}>
+                                                        <Mail className="h-4 w-4" />
+                                                        <span className="sr-only">Email {user.name}</span>
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent>
+                                                    <DialogHeader>
+                                                        <DialogTitle>Send Email to {user.name}</DialogTitle>
+                                                    </DialogHeader>
+                                                    <div className="space-y-4 py-4">
+                                                        <div className="space-y-2">
+                                                            <Label htmlFor="recipient">Recipient</Label>
+                                                            <Input id="recipient" value={user.email} disabled />
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                            <Label htmlFor="subject">Subject</Label>
+                                                            <Input
+                                                                id='subject'
+                                                                placeholder="Enter subject"
+                                                                value={emailSubject}
+                                                                onChange={(e) => setEmailSubject(e.target.value)}
+
+                                                            />
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                            <Label htmlFor="message">Message</Label>
+                                                            <Textarea
+                                                                id="message"
+                                                                placeholder="Type your message here..."
+                                                                rows={5}
+                                                                value={emailContent}
+                                                                onChange={(e) => setEmailContent(e.target.value)}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <DialogFooter>
+                                                        <Button onClick={handleSendEmail}>Send Email</Button>
+                                                    </DialogFooter>
+
+                                                </DialogContent>
+                                            </Dialog>
+                                            <a
+                                                href={getGmailUrl(user.email)}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex"
+                                            >
+                                                <Button size={isMobile ? "icon" : "sm"} variant="outline" className="flex items-center gap-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-4 w-4 fill-current">
+                                                        <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" />
+                                                    </svg>
+                                                    {!isMobile && <span>Gmail</span>}
+                                                    <span className="sr-only">Open Gmail to email {user.name}</span>
                                                 </Button>
-                                            </DialogTrigger>
-                                            <DialogContent>
-                                                <DialogHeader>
-                                                    <DialogTitle>Send Email to {user.name}</DialogTitle>
-                                                </DialogHeader>
-                                                <div className="space-y-4 py-4">
-                                                    <div className="space-y-2">
-                                                        <Label htmlFor="recipient">Recipient</Label>
-                                                        <Input id="recipient" value={user.email} disabled />
-                                                    </div>
-                                                    <div className="space-y-2">
-                                                        <Label htmlFor="message">Message</Label>
-                                                        <Textarea
-                                                            id="message"
-                                                            placeholder="Type your message here..."
-                                                            rows={5}
-                                                            value={emailContent}
-                                                            onChange={(e) => setEmailContent(e.target.value)}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <DialogFooter>
-                                                    <Button onClick={handleSendEmail}>Send Email</Button>
-                                                </DialogFooter>
-                                            </DialogContent>
-                                        </Dialog>
+                                            </a>
+                                        </div>
                                     </div>
                                 </CardContent>
                             </Card>

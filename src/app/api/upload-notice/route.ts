@@ -11,7 +11,6 @@ export async function POST(req: Request) {
         //  Authenticate the user
         const user = await currentUser()
         if (!user) {
-            console.log("Not authenticated");
             return NextResponse.json(
                 { success: false, message: "Authentication error" },
                 { status: 401 }
@@ -31,7 +30,6 @@ export async function POST(req: Request) {
         // Validate form data using Zod
         const validation = noticeSchema.safeParse({ title, content, status, category, fileUrl, priority });
         if (!validation.success) {
-            console.error("Validation Error:", validation.error.errors);
             return NextResponse.json(
                 { success: false, message: "Validation failed", errors: validation.error.errors },
                 { status: 400 }
@@ -55,7 +53,6 @@ export async function POST(req: Request) {
             { status: 200 }
         );
     } catch (error) {
-        console.error("Upload Error:", error);
         return NextResponse.json(
             { success: false, message: "Internal server error" },
             { status: 500 }

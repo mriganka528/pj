@@ -50,13 +50,13 @@ function NoticeCard({ notice, onDelete }: { notice: Notice; onDelete: (id: strin
                     </div>
                     <div className=' flex justify-center items-center'>
                         <div className="self-end sm:self-auto">
-                            <AlertDialog>
+                            <AlertDialog >
                                 <AlertDialogTrigger asChild>
                                     <Button variant="secondary" size="sm" disabled={isDeleting}>
                                         <Trash2 className="h-4 w-4" />
                                     </Button>
                                 </AlertDialogTrigger>
-                                <AlertDialogContent>
+                                <AlertDialogContent >
                                     <AlertDialogHeader>
                                         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                                         <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>

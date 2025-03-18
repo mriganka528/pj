@@ -19,10 +19,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Check, ChevronDown, RefreshCcw, Search, X } from "lucide-react";
+import { Check, ChevronDown, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import NoticeCard from "../components/NoticeCard";
 import { motion } from "framer-motion"
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 const Page = () => {
   const categories: { value: Category; label: string }[] = [
     { value: "Academic", label: "Academic" },
@@ -81,7 +83,6 @@ const Page = () => {
       try {
         const response = await axios.get(`/api/get-notices`);
 
-        console.log(response)
         if (response.data.success) {
           setNotices(response.data.notices);
         }
@@ -278,23 +279,46 @@ const Page = () => {
 
         <TabsContent value={selectedTab} className="mt-4">
           {loading ? (
-            <RefreshCcw className=" animate-spin" />
-          ) : (
+            // Loading skeletons
             <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              {filteredNotices.length > 0 ? (
-                filteredNotices.map((notice, index) => (
-                  <motion.div key={notice.id} initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.3 }}
-                    whileHover={{ y: -5 }}>
-                    <NoticeCard notice={notice} onDelete={handleDelete} />
-                  </motion.div>
+              {
+                Array.from({ length: 6 }).map((_, index) => (
+                  <Card key={index} className="overflow-hidden">
+                    <CardContent className="p-0">
+                      <div className="p-6 space-y-4">
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-3/4" />
+                          <Skeleton className="h-4 w-1/2" />
+                        </div>
+                        <Skeleton className="h-20 w-full" />
+                        <div className="flex justify-between items-center">
+                          <Skeleton className="h-4 w-1/3" />
+                          <Skeleton className="h-8 w-8 rounded-full" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))
-              ) : (
-                <p className="text-center text-muted-foreground">No notices found.</p>
-              )}
+              }
             </div>
-          )}
+
+          )
+            : (
+              <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {filteredNotices.length > 0 ? (
+                  filteredNotices.map((notice, index) => (
+                    <motion.div key={notice.id} initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05, duration: 0.3 }}
+                      whileHover={{ y: -5 }}>
+                      <NoticeCard notice={notice} onDelete={handleDelete} />
+                    </motion.div>
+                  ))
+                ) : (
+                  <p className="text-center text-muted-foreground">No notices found.</p>
+                )}
+              </div>
+            )}
         </TabsContent>
       </Tabs>
     </div>

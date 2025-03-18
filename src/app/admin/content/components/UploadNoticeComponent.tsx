@@ -64,12 +64,11 @@ const UploadNoticeComponent = () => {
             router.refresh();
         } catch (error) {
             toast.error("Failed to save the notice")
-            console.error("Upload Error:", error);
         }
         setSubmitting(false)
     }
     return (
-        <div className="space-y-6 ">
+        <div className="space-y-6 sm:px-12 md:px-20">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h1 className="text-3xl font-bold">Content Management</h1>
             </div>
@@ -203,7 +202,6 @@ const UploadNoticeComponent = () => {
                     </form>
                 </Form>
             </div>
-
         </div>
     )
 }

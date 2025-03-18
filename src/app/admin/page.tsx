@@ -117,7 +117,6 @@ export default async function Dashboard() {
 
       {/* Main content area */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-
         {/* Notice Chart */}
         <Card className="md:col-span-3">
           <CardHeader>

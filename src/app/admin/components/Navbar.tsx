@@ -20,11 +20,11 @@ const Navbar = () => {
     const pathname = usePathname()
 
     return (
-        <nav className="  bg-background border-b w-svw flex justify-between px-6 py-6 shadow-sm dark:border-border">
+        <nav className=" text-sm sm:text-base bg-background border-b w-svw flex justify-between px-6 py-6 shadow-sm dark:border-border">
             <div >
-                <h1 className="text-2xl font-bold text-foreground">Admin Control Center</h1>
+                <h1 className="text-xl md:text-2xl font-bold text-foreground">Admin Control Center</h1>
             </div>
-            <Sidebar/>
+            <Sidebar />
             <ul className="space-x-2 flex max-[768px]:hidden ">
                 {navItems.map((item) => (
                     <li key={item.name}>

@@ -8,6 +8,8 @@ import { RefreshCcw } from "lucide-react";
 import NoticeCard from "../components/NoticeCard";
 import { toast } from "sonner";
 import { motion } from "framer-motion"
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 const Page = () => {
@@ -22,7 +24,6 @@ const Page = () => {
         const currentDate = new Date()
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
-        console.log("Helooo", allNotices)
         // Filter notices for the current month
         const filteredNotices = allNotices.filter((notice: Notice) => {
           const noticeDate = new Date(notice.dateCreated); // Ensure 'uploadDate' is in ISO format in DB
@@ -31,10 +32,8 @@ const Page = () => {
             noticeDate.getFullYear() === currentYear
           );
         });
-        console.log("Helooo$$$", filteredNotices)
 
         setNotices(() => filteredNotices);
-        console.log("NNNN :", notices)
       }
     } catch (error) {
       console.error("Failed to fetch notices:", error);
@@ -58,12 +57,11 @@ const Page = () => {
       }
     } catch (error) {
       toast.error("Failed to delete the notice")
-      console.error("Error deleting notice:", error);
     }
   };
 
   return (
-    <div className="px-10">
+    <div className="px-4 sm:px-10">
       <UploadNoticeComponent />
       <div className="overflow-x-auto">
         <div className="max-w-7xl">
@@ -71,7 +69,29 @@ const Page = () => {
             <h2 className="text-2xl font-semibold mr-3 mb-6">Recent Notices</h2>
           </div>
           {loading ? (
-            <RefreshCcw className=" animate-spin" />
+            // Loading skeletons
+            <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {
+                Array.from({ length: 6 }).map((_, index) => (
+                  <Card key={index} className="overflow-hidden">
+                    <CardContent className="p-0">
+                      <div className="p-6 space-y-4">
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-3/4" />
+                          <Skeleton className="h-4 w-1/2" />
+                        </div>
+                        <Skeleton className="h-20 w-full" />
+                        <div className="flex justify-between items-center">
+                          <Skeleton className="h-4 w-1/3" />
+                          <Skeleton className="h-8 w-8 rounded-full" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              }
+            </div>
+
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {notices.map((notice, index) => (
