@@ -83,7 +83,7 @@ export default function UserForm() {
           <CardHeader className="pb-4">
             <CardTitle className="text-xl text-center text-foreground">User Registration</CardTitle>
             <CardDescription className="text-center px-4 text-muted-foreground">
-              You haven't registered yourself yet. Please complete this form to continue your journey with us!
+              You haven&lsquo;t registered yourself yet. Please complete this form to continue your journey with us!
             </CardDescription>
           </CardHeader>
 
