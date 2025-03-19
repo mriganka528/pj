@@ -1,22 +1,31 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { PrismaClient, Status, Category, Priority } from "@prisma/client";
-
 import { noticeSchema } from "@/schemas/notice/noticeSchema";
-
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
     try {
         //  Authenticate the user
         const user = await currentUser()
-        if (!user) {
+        const { userId } = await auth()
+
+        if (!user || !userId) {
             return NextResponse.json(
                 { success: false, message: "Authentication error" },
                 { status: 401 }
             );
         }
-
+        const getAdmin = await prisma.admin.findUnique({
+            where: {
+                clerkId: userId
+            }
+        })
+        if (!getAdmin) {
+            return NextResponse.json({
+                success: false, message: "Admin not found"
+            }, { status: 404 })
+        }
         //  Parse FormData
         const formData = await req.formData();
         const title = formData.get("title") as string;
@@ -44,7 +53,8 @@ export async function POST(req: Request) {
                 status,
                 category,
                 noticeURL: fileUrl,
-                priority
+                priority,
+                adminId: getAdmin.id,
             },
         });
 

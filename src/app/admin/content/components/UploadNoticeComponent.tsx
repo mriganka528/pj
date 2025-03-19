@@ -191,7 +191,7 @@ const UploadNoticeComponent = ({ setIsUploading }: { setIsUploading: React.Dispa
                                                 }
                                                 }
                                             />
-                                            <p>{selectedFiles}</p>
+                                            <p className='text-gray-700 dark:text-gray-100'>{selectedFiles}</p>
                                         </div>
                                     </FormControl>
                                     <FormMessage />

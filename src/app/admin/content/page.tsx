@@ -68,7 +68,9 @@ const Page = () => {
         <div className="max-w-7xl">
           <div className="flex justify-start">
             <h2 className="text-2xl font-semibold mr-3 mb-6">Recent Notices</h2>
-          </div>
+          </div>{
+
+          }
           {loading ? (
             // Loading skeletons
             <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -94,16 +96,19 @@ const Page = () => {
             </div>
 
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {notices.map((notice, index) => (
-                <motion.div key={notice.id} initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05, duration: 0.3 }}
-                  whileHover={{ y: -5 }}>
-                  <NoticeCard notice={notice} onDelete={handleDelete} />
-                </motion.div>
-              ))}
-            </div>
+            (notices.length === 0) ? <p className="text-muted-foreground">No notices found.</p>
+              : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {notices.map((notice, index) => (
+                    <motion.div key={notice.id} initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05, duration: 0.3 }}
+                      whileHover={{ y: -5 }}>
+                      <NoticeCard notice={notice} onDelete={handleDelete} />
+                    </motion.div>
+                  ))}
+                </div>
+              )
           )}
         </div>
       </div>

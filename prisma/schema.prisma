@@ -16,6 +16,8 @@ model Notice {
   dateCreated DateTime @default(now())
   noticeURL   String
   priority    Priority
+  admin       Admin    @relation(fields: [adminId], references: [id])
+  adminId     String   @db.ObjectId
 }
 
 enum Priority {
@@ -53,10 +55,11 @@ model SuscribedUser {
 }
 
 model Admin {
-  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   firstName  String
   middleName String?
   lastName   String
-  email      String  @unique
-  clerkId    String  @unique
+  email      String   @unique
+  clerkId    String   @unique
+  Notice     Notice[]
 }
