@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const Page = () => {
   const [notices, setNotices] = useState<Notice[]>([]);
   const [loading, setLoading] = useState(true);
+  const [uploading, setIsUploading] = useState<boolean>(false);
   const fetchNotices = async () => {
     try {
       const response = await axios.get("/api/get-notices");
@@ -42,7 +43,7 @@ const Page = () => {
   };
   useEffect(() => {
     fetchNotices();
-  }, []);
+  }, [uploading]);
 
   const handleDelete = async (notice_id: string) => {
     try {
@@ -62,7 +63,7 @@ const Page = () => {
 
   return (
     <div className="px-4 sm:px-10">
-      <UploadNoticeComponent />
+      <UploadNoticeComponent setIsUploading={setIsUploading} />
       <div className="overflow-x-auto">
         <div className="max-w-7xl">
           <div className="flex justify-start">

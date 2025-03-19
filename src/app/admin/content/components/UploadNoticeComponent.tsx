@@ -28,7 +28,7 @@ const categories = [
     "Library",
     "Administrative"
 ]
-const UploadNoticeComponent = () => {
+const UploadNoticeComponent = ({ setIsUploading }: { setIsUploading: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const form = useForm<z.infer<typeof noticeSchema>>({
         resolver: zodResolver(noticeSchema),
         defaultValues: {
@@ -45,6 +45,7 @@ const UploadNoticeComponent = () => {
     const [submitting, setSubmitting] = useState<boolean>(false)
     const router = useRouter()
     const onSubmit = async (values: z.infer<typeof noticeSchema>) => {
+        setIsUploading(true)
         const { title, content, status, category, fileUrl, priority } = values
         setSubmitting(true)
         const data = new FormData();
@@ -65,6 +66,9 @@ const UploadNoticeComponent = () => {
         } catch (error) {
             console.log(error)
             toast.error("Failed to save the notice")
+        }
+        finally {
+            setIsUploading(false)
         }
         setSubmitting(false)
     }

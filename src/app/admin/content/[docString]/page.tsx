@@ -10,7 +10,7 @@ const page = async ({ params: paramsPromise }: { params: Promise<{ docString: st
 
     const pdfUrl = `${PDF_HOST_URL + params.docString}`
     return (
-        <div >
+        <div className='flex flex-col space-y-5' >
             <GoBackComponent />
             <PDFViewer pdfUrl={pdfUrl} />
         </div>

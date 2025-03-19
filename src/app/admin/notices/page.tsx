@@ -269,12 +269,12 @@ const Page = () => {
       )}
       {/* Tabs */}
       <Tabs defaultValue="all" value={selectedTab} onValueChange={setSelectedTab}>
-        <TabsList>
-          <TabsTrigger value="all">All Notices</TabsTrigger>
-          <TabsTrigger value="active">Active</TabsTrigger>
-          <TabsTrigger value="archived">Archived</TabsTrigger>
-          <TabsTrigger value="scheduled">Scheduled</TabsTrigger>
-          <TabsTrigger value="draft">Draft</TabsTrigger>
+        <TabsList >
+          <TabsTrigger className="text-xs sm:text-base" value="all">All Notices</TabsTrigger>
+          <TabsTrigger className="text-xs sm:text-base" value="active">Active</TabsTrigger>
+          <TabsTrigger className="text-xs sm:text-base" value="archived">Archived</TabsTrigger>
+          <TabsTrigger className="text-xs sm:text-base" value="scheduled">Scheduled</TabsTrigger>
+          <TabsTrigger className="text-xs sm:text-base" value="draft">Draft</TabsTrigger>
         </TabsList>
 
         <TabsContent value={selectedTab} className="mt-4">

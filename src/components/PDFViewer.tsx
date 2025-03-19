@@ -36,7 +36,7 @@ const PDFViewer: React.FC<Props> = ({ pdfUrl }) => {
     return (
         <div className="flex flex-col items-center">
             {/* Controls */}
-            <div className="mb-4 flex items-center space-x-2">
+            <div className="mb-4 flex items-center space-x-1">
                 {/* Previous Page */}
                 <Button onClick={() => changePage(-1)} disabled={pageNumber <= 1}>
                     <ChevronLeft className="h-4 w-4" />

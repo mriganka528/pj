@@ -1,15 +1,14 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth,  } from "@clerk/nextjs/server";
 import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 const prisma = new PrismaClient()
-export default async function RootLayout({
+export default async function RegistratinLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const { userId} = await auth()
-    const current_user= await currentUser()
-    console.log("UserId :", current_user);
+    const { userId } = await auth()
+    console.log("UserId :", userId);
     if (!userId) {
         redirect('/sign-in')
 
@@ -19,10 +18,8 @@ export default async function RootLayout({
             clerkId: userId
         }
     })
-    if (userId && !findAdmin) {
-        redirect('/register-admin')
-    } else {
-        redirect('/admin')
+    if (userId && findAdmin) {
+        redirect("/admin")
     }
     return (
         <>

@@ -2,7 +2,7 @@
 import React from 'react'
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Search, Mail, Calendar, Trash2 } from "lucide-react"
+import { Search, Mail, Calendar, Trash2, Loader } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -26,7 +26,9 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
     const [selectedUser, setSelectedUser] = useState<SuscribedUser | null>(null)
     const [emailContent, setEmailContent] = useState<string>("")
     const [emailSubject, setEmailSubject] = useState<string>("")
-    const [isDeleting, setIsDeleating] = useState<boolean>(false);
+    const [isDeleting, setIsDeleating] = useState<boolean>(false)
+    const [isSending, setIsSending] = useState<boolean>(false)
+    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const isMobile = useMobile()
 
     // Generate Gmail URL for sending email
@@ -70,27 +72,29 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
 
     // Handle sending email
     const handleSendEmail = async () => {
-        if (!selectedUser || !emailContent.trim()) return
+        if (!selectedUser || !emailContent.trim()) return;
         try {
-
+            setIsSending(true);
             const response = await axios.post('/api/send-mail', {
                 emailAddress: selectedUser.email,
                 subject: emailSubject,
                 message: emailContent
-            })
+            });
+
             if (response.status === 200) {
-                toast.success("Notification is sent successfully")
+                toast.success("Notification is sent successfully");
+                setIsDialogOpen(false); // Close the dialog after successful email sending
             }
         } catch (error) {
-            console.error(error)
-            toast.error("failed to sent message")
+            console.error(error);
+            toast.error("Failed to send message");
         } finally {
-
-            setEmailContent("")
-            setSelectedUser(null)
+            setIsSending(false);
+            setEmailSubject("")
+            setEmailContent("");
+            setSelectedUser(null);
         }
-    }
-
+    };
     // Get unique months from user data
     const getUniqueMonths = () => {
         const months = users.map((user) => {
@@ -106,11 +110,11 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
             await axios.delete('/api/remove-user', {
                 data: { user_id }
             });
-    
+
             // Update state to remove the deleted user
             setUsers((prevUsers) => prevUsers.filter(user => user.id !== user_id));
             setFilteredUsers((prevUsers) => prevUsers.filter(user => user.id !== user_id));
-    
+
             toast("User deleted successfully");
         } catch (error) {
             console.log(error);
@@ -236,10 +240,16 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
                                             })}
                                         </Badge>
                                         <div>
-
-                                            <Dialog>
+                                            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                                                 <DialogTrigger asChild>
-                                                    <Button size="icon" variant="ghost" onClick={() => setSelectedUser(user)}>
+                                                    <Button
+                                                        size="icon"
+                                                        variant="ghost"
+                                                        onClick={() => {
+                                                            setSelectedUser(user);
+                                                            setIsDialogOpen(true); // Open the dialog when clicking the button
+                                                        }}
+                                                    >
                                                         <Mail className="h-4 w-4" />
                                                         <span className="sr-only">Email {user.name}</span>
                                                     </Button>
@@ -256,11 +266,10 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
                                                         <div className="space-y-2">
                                                             <Label htmlFor="subject">Subject</Label>
                                                             <Input
-                                                                id='subject'
+                                                                id="subject"
                                                                 placeholder="Enter subject"
                                                                 value={emailSubject}
                                                                 onChange={(e) => setEmailSubject(e.target.value)}
-
                                                             />
                                                         </div>
                                                         <div className="space-y-2">
@@ -275,9 +284,15 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
                                                         </div>
                                                     </div>
                                                     <DialogFooter>
-                                                        <Button onClick={handleSendEmail}>Send Email</Button>
+                                                        {isSending ? (
+                                                            <>
+                                                                <Loader className="animate-spin" />
+                                                                Sending...
+                                                            </>
+                                                        ) : (
+                                                            <Button onClick={handleSendEmail}>Send Email</Button>
+                                                        )}
                                                     </DialogFooter>
-
                                                 </DialogContent>
                                             </Dialog>
                                             <a
