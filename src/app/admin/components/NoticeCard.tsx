@@ -50,7 +50,7 @@ const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: strin
                             {new Date(notice.dateCreated).toDateString()} • {notice.status}
                         </CardDescription>
                     </div>
-                    <div className=' flex justify-center items-center'>
+                    <div className=' flex justify-center items-center '>
                         <div className="self-end sm:self-auto">
                             <AlertDialog >
                                 <AlertDialogTrigger asChild>
@@ -70,28 +70,30 @@ const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: strin
                                 </AlertDialogContent>
                             </AlertDialog>
                         </div>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-8 w-8">
-                                    <MoreHorizontal className="h-4 w-4" />
-                                    <span className="sr-only">Open menu</span>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuItem>
-                                    <Link className='flex justify-center items-center ' href={`/admin/content/${notice.noticeURL.substring(notice.noticeURL.lastIndexOf("/") + 1)}`}    >
-                                        <FileText className="mr-2 h-4 w-4" />
-                                        View PDF
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <Link className='flex justify-center items-center ' href={`/admin/content/update/${notice.id}`}    >
-                                        <PencilLine className="mr-2 h-4 w-4" />
-                                        Update Notice
-                                    </Link>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <div className='ml-1'>
+                            <DropdownMenu >
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                                        <MoreHorizontal className="h-4 w-4" />
+                                        <span className="sr-only">Open menu</span>
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuItem>
+                                        <Link className='flex justify-center items-center ' href={`/admin/content/${notice.noticeURL.substring(notice.noticeURL.lastIndexOf("/") + 1)}`}    >
+                                            <FileText className="mr-2 h-4 w-4" />
+                                            View PDF
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <Link className='flex justify-center items-center ' href={`/admin/content/update/${notice.id}`}    >
+                                            <PencilLine className="mr-2 h-4 w-4" />
+                                            Update Notice
+                                        </Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
                     </div>
                 </div>
             </CardHeader>

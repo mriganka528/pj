@@ -1,9 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { BarChart, Bar, XAxis, CartesianGrid } from "recharts"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 const weekOptions = [
   { label: "Current Week", value: "current" },
@@ -32,8 +33,15 @@ export function NoticeChart() {
     fetchData()
   }, [selectedWeek])
 
+  const chartConfig = {
+    desktop: {
+      label: "notices",
+      color: "hsl(var(--chart-1))",
+    },
+  } satisfies ChartConfig
+
   return (
-    <div>
+    <div className='w-full'>
       {/* Week Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <Select value={selectedWeek} onValueChange={setSelectedWeek}>
@@ -56,15 +64,23 @@ export function NoticeChart() {
           <Skeleton className="w-full h-[300px] rounded-lg" />
         </div>
       ) : (
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" tick={{ fontSize: 14 }} />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="notices" fill="#6366f1" radius={[8, 8, 0, 0]} />
+        <ChartContainer config={chartConfig}>
+          <BarChart accessibilityLayer data={data}>
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="name"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Bar dataKey="notices" fill="var(--color-desktop)" radius={8} />
           </BarChart>
-        </ResponsiveContainer>
+        </ChartContainer>
       )}
     </div>
 
