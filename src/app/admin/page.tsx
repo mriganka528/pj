@@ -13,13 +13,24 @@ import getCategoryDetails from "@/lib/categoryDetails/getCategoryDetails"
 
 export default async function Dashboard() {
 
-  const totalNotice = await getTotalNotice()
-  const noticeUploadGrowth = await getNoticeUploadGrowth()
-  const totalActiveNotice = await getTotalActiveNotice()
-  const weeklyNoticeUploadGrowth = await getWeeklyNoticeGrowth()
-  const subscribedUser = await getSubscribedUser()
-  const totalScheduledNotice = await getTotalScheduledNotice()
-  const totalCategories = await getTotalCategories()
+  const [
+    totalNotice,
+    noticeUploadGrowth,
+    totalActiveNotice,
+    weeklyNoticeUploadGrowth,
+    subscribedUser,
+    totalScheduledNotice,
+    totalCategories,
+  ] = await Promise.all([
+    getTotalNotice(),
+    getNoticeUploadGrowth(),
+    getTotalActiveNotice(),
+    getWeeklyNoticeGrowth(),
+    getSubscribedUser(),
+    getTotalScheduledNotice(),
+    getTotalCategories(),
+  ])
+  
   const categoryManu = [
     {
       name: Category.Academic,
@@ -153,4 +164,3 @@ export default async function Dashboard() {
     </div>
   )
 }
-
