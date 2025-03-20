@@ -15,8 +15,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { SuscribedUser } from '@prisma/client'
 import { useMobile } from './UseMobile'
 import axios from 'axios'
-import { toast } from 'sonner'
 import { AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialog, AlertDialogContent, AlertDialogTrigger } from '@/components/ui/alert-dialog'
+import toast from 'react-hot-toast'
 const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) => {
     const [users, setUsers] = useState<SuscribedUser[]>([])
     const [filteredUsers, setFilteredUsers] = useState<SuscribedUser[]>([])

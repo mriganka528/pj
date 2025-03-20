@@ -13,8 +13,8 @@ import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 const categories = [
     "Academic",
@@ -56,13 +56,21 @@ const UploadNoticeComponent = ({ setIsUploading }: { setIsUploading: React.Dispa
         data.append("fileUrl", fileUrl);
         data.append("priority", priority);
         try {
-            await axios.post('/api/upload-notice', data, {
-                headers: { "Content-Type": "multipart/form-data" }
+
+            toast.promise(
+                axios.post('/api/upload-notice', data, {
+                    headers: { "Content-Type": "multipart/form-data" }
+                }),
+                {
+                    loading: 'Uploading...',
+                    success: <b>Notice uploaded successfully!</b>,
+                    error: <b>Failed to upload the notice.</b>,
+                }
+            ).then(() => {
+                form.reset();
+                setSelectedFiles("");
+                router.refresh();
             });
-            toast.success("Notice uploaded successfully");
-            form.reset()
-            setSelectedFiles("")
-            router.refresh();
         } catch (error) {
             console.log(error)
             toast.error("Failed to save the notice")
@@ -73,7 +81,8 @@ const UploadNoticeComponent = ({ setIsUploading }: { setIsUploading: React.Dispa
         setSubmitting(false)
     }
     return (
-        <div className="space-y-6 sm:px-12 md:px-20">
+        <div className="space-y-6 sm:px-12 md:px-20 sm:border sm:rounded-md mt-4 py-4 sm:py-16 sm:shadow-md md:dark:shadow-gray-800">
+
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h1 className="text-3xl font-bold">Content Management</h1>
             </div>

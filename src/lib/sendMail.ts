@@ -33,7 +33,7 @@ export async function sendMail(
             html: `
               <div
     style="max-width: 600px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); text-align: center; margin: auto;">
-    <h1 style="color: #d9534f;">⚠️ Urgent Notification ⚠️</h1>
+    <h1 style="color: #d9534f;">⚠️ Important Notification ⚠️</h1>
     <p style="font-size: 1rem; color: #333;">Dear <strong>${extractUsername(email)}</strong>,</p>
 
     <p style="font-size: 1rem; color: #555;">You have received an important message from the <strong>BulletinX</strong>

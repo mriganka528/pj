@@ -4,14 +4,16 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 import { Notice } from '@prisma/client'
-import { AlertCircle, FileText, FolderOpen, MoreHorizontal, PencilLine, Trash2 } from 'lucide-react'
+import { AlertCircle, ArrowLeft, FileText, FolderOpen, MoreHorizontal, PencilLine, ShieldQuestion, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
 
-function NoticeCard({ notice, onDelete }: { notice: Notice; onDelete: (id: string) => void }) {
+const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: string) => void }) => {
     const getPriorityColor = (priority: string) => {
         switch (priority) {
             case "High":
@@ -100,10 +102,38 @@ function NoticeCard({ notice, onDelete }: { notice: Notice; onDelete: (id: strin
                         <FolderOpen className="h-3 w-3 mr-1" />
                         {notice.category}
                     </Badge>
+                    <AlertDialog>
+                        <AlertDialogTrigger><Badge variant="outline" className="flex items-center gap-1">
+                            <ShieldQuestion className="h-3 w-3 mr-1" />
+                            Uploader details
+                        </Badge></AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Uploader Details</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    <div className=' flex flex-col space-y-5 mt-6'>
+                                        <div>
+                                            <Label>Admin name</Label>  < Input id='name' />
+                                        </div>
+                                        <div>
+                                            <Label>Email Address</Label>  < Input id='email' />
+                                        </div>
+                                        <div>
+                                            <Label>Admin Id</Label>  < Input id='id' />
+                                        </div>
+
+                                    </div>
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel><ArrowLeft /> Go Back</AlertDialogCancel>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                 </div>
             </CardContent>
             <CardFooter className="flex justify-between pt-2">
-                <div className="text-xs text-muted-foreground">ID: {notice.id}</div>
+                <div className="text-xs text-muted-foreground">Notice Id: {notice.id}</div>
                 <Badge className={getPriorityColor(notice.priority)}>
                     <AlertCircle className="h-3 w-3 mr-1" />
                     {notice.priority}

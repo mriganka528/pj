@@ -16,7 +16,7 @@ export async function GET() {
     }
 
     const notices = await prisma.notice.findMany({
-      orderBy: { dateCreated: "desc" },
+      orderBy: { dateCreated: "desc" }
     });
 
     return NextResponse.json({ success: true, notices });

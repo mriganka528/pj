@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, CheckCircle2, RefreshCcw } from "lucide-react";
+import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -149,7 +149,7 @@ export default function UserForm() {
                 <div className="pt-2 flex justify-center">{
                   submitting ?
                     <div className="flex">
-                      <RefreshCcw className=" animate-spin mr-2" /> Registering....
+                      <Loader2 className=" animate-spin mr-2" /> Registering....
                     </div> : (
                       <Button
                         type="submit"

@@ -5,10 +5,10 @@ import axios from "axios";
 import UploadNoticeComponent from "./components/UploadNoticeComponent";
 import { Notice } from "@prisma/client";
 import NoticeCard from "../components/NoticeCard";
-import { toast } from "sonner";
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import toast from "react-hot-toast";
 
 
 const Page = () => {
@@ -20,7 +20,7 @@ const Page = () => {
       const response = await axios.get("/api/get-notices");
       if (response.data.success) {
         const allNotices = response.data.notices;
-
+        console.log(allNotices)
         const currentDate = new Date()
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
@@ -64,7 +64,7 @@ const Page = () => {
   return (
     <div className="px-4 sm:px-10">
       <UploadNoticeComponent setIsUploading={setIsUploading} />
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mt-3 sm:mt-6">
         <div className="max-w-7xl">
           <div className="flex justify-start">
             <h2 className="text-2xl font-semibold mr-3 mb-6">Recent Notices</h2>
