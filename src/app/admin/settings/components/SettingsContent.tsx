@@ -7,7 +7,7 @@ import { Admin } from "@prisma/client"
 import { Separator } from "@radix-ui/react-select"
 import axios from "axios"
 import { motion } from "framer-motion"
-import { Loader2, Moon, Settings, Sun, Trash2 } from "lucide-react"
+import { Loader2, Moon, Settings, Sun } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import toast from "react-hot-toast"
@@ -123,7 +123,11 @@ const SettingsContent = ({ tabId, theme, setTheme, registeredAdmins, userId }: S
             transition-colors duration-200 ease-in-out
             shadow-sm hover:shadow-md
           `}
-                                            onClick={() => { setTheme(t.label), toast.success(`${t.Name} mode applied`) }}
+                                            onClick={() => {
+                                                setTheme(t.label);
+                                                toast.success(`${t.Name} mode applied`);
+                                            }}
+
                                         >
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
@@ -162,7 +166,7 @@ const SettingsContent = ({ tabId, theme, setTheme, registeredAdmins, userId }: S
                         <motion.div variants={item} className="space-y-4">
                             <h3 className="font-medium">Administrator List</h3>
                             <div className="space-y-4">
-                                {registeredAdmins.map((admin, index) => (
+                                {registeredAdmins.map((admin) => (
                                     <motion.div
                                         key={admin.id}
                                         variants={item}

@@ -26,13 +26,13 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => { setTheme("light"), toast.success("Light mode applied") }}>
+        <DropdownMenuItem onClick={() => { setTheme("light"); toast.success("Light mode applied") }}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => { setTheme("dark"), toast.success("Dark mode applied") }}>
+        <DropdownMenuItem onClick={() => { setTheme("dark"); toast.success("Dark mode applied") }}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => { setTheme("system"), toast.success("System mode applied") }}>
+        <DropdownMenuItem onClick={() => { setTheme("system"); toast.success("System mode applied") }}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
