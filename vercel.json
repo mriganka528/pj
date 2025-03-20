@@ -1,9 +1,7 @@
-
 {
-    "build": {
-      "env": {
-      "DATABASE_URL": "mongodb+srv://mrj21012003:5HQzScsaEkd5iozA@cluster0.zves0.mongodb.net/Microfinance?retryWrites=true&w=majority&appName=Cluster0"
-      }
+  "build": {
+    "env": {
+      "DATABASE_URL": "mongodb+srv://mrj21012003:5HQzScsaEkd5iozA@cluster0.hcyj4.mongodb.net/BulletinX?retryWrites=true&w=majority&appName=Cluster0"
     }
   }
-  
+}

@@ -96,13 +96,13 @@ const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: strin
                 </div>
             </CardHeader>
             <CardContent>
-                <p className="text-sm text-muted-foreground line-clamp-3 mb-3">{notice.content}</p>
+                <span className="text-sm text-muted-foreground line-clamp-3 mb-3">{notice.content}</span>
                 <div className="flex flex-wrap gap-2 mt-2">
                     <Badge variant="outline" className="flex items-center gap-1">
                         <FolderOpen className="h-3 w-3 mr-1" />
                         {notice.category}
                     </Badge>
-                    <AlertDialog>
+                    <AlertDialog >
                         <AlertDialogTrigger><Badge variant="outline" className="flex items-center gap-1">
                             <ShieldQuestion className="h-3 w-3 mr-1" />
                             Uploader details
@@ -113,7 +113,7 @@ const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: strin
                                 <AlertDialogDescription>
                                     <div className=' flex flex-col space-y-5 mt-6'>
                                         <div>
-                                            <Label>Admin name</Label>  < Input id='name' />
+                                            <Label>Admin Name</Label>  < Input id='name' />
                                         </div>
                                         <div>
                                             <Label>Email Address</Label>  < Input id='email' />

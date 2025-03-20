@@ -190,38 +190,38 @@ const SettingsContent = ({ tabId, theme, setTheme, registeredAdmins, userId }: S
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-wrap gap-3 text-sm">
+                                            <div className="flex sm:flex-col flex-wrap gap-3 text-sm">
                                                 <div className="rounded-md bg-secondary px-2 py-1">Id: {admin.id}</div>
                                                 {/* <div className="rounded-md bg-secondary px-2 py-1">Notices: {admin}</div> */}
+                                                <motion.div whileHover={{ scale: 1.01 }}
+                                                    whileTap={{ scale: 0.98 }} className="flex justify-end">{
+                                                        (loading && admin.clerkId == userId) ? <Loader2 className=" animate-spin text-red-800" /> : (
+                                                            <AlertDialog >
+                                                                <AlertDialogTrigger asChild>
+                                                                    <Button
+                                                                        disabled={admin.clerkId !== userId}
+                                                                        className="text-sm px-3 py-1 rounded-md bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors"
+                                                                    >
+                                                                        Remove Registration
+                                                                    </Button>
+                                                                </AlertDialogTrigger>
+                                                                <AlertDialogContent >
+                                                                    <AlertDialogHeader>
+                                                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                                        <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+                                                                    </AlertDialogHeader>
+                                                                    <AlertDialogFooter>
+                                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                                        <AlertDialogAction className='bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90' onClick={() => { removeAdmin(admin.clerkId) }}>{loading ? "Deleting..." : "Continue"}</AlertDialogAction>
+                                                                    </AlertDialogFooter>
+                                                                </AlertDialogContent>
+                                                            </AlertDialog>
+                                                        )
+                                                    }
+                                                </motion.div>
                                             </div>
                                         </div>
-                                        <motion.div whileHover={{ scale: 1.01 }}
-                                            whileTap={{ scale: 0.98 }} className="flex justify-end">{
-                                                (loading && admin.clerkId == userId) ? <Loader2 className=" animate-spin text-red-800" /> : (
 
-                                                    <AlertDialog >
-                                                        <AlertDialogTrigger asChild>
-                                                            <Button
-                                                                disabled={admin.clerkId !== userId}
-                                                                className="text-sm px-3 py-1 rounded-md bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors"
-                                                            >
-                                                                Remove Registration
-                                                            </Button>
-                                                        </AlertDialogTrigger>
-                                                        <AlertDialogContent >
-                                                            <AlertDialogHeader>
-                                                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                                                <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
-                                                            </AlertDialogHeader>
-                                                            <AlertDialogFooter>
-                                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                                <AlertDialogAction className='bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90' onClick={() => { removeAdmin(admin.clerkId) }}>{loading ? "Deleting..." : "Continue"}</AlertDialogAction>
-                                                            </AlertDialogFooter>
-                                                        </AlertDialogContent>
-                                                    </AlertDialog>
-                                                )
-                                            }
-                                        </motion.div>
                                     </motion.div>
                                 ))}
                             </div>
