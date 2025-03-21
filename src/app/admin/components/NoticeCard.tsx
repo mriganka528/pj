@@ -11,7 +11,7 @@ import { Notice } from '@prisma/client'
 import { AlertCircle, ArrowLeft, FileText, FolderOpen, MoreHorizontal, PencilLine, ShieldQuestion, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { toast } from 'sonner'
+import { toast } from 'react-hot-toast'
 
 const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: string) => void }) => {
 
@@ -116,13 +116,16 @@ const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: strin
                                 <AlertDialogDescription>
                                     <div className=' flex flex-col space-y-7 mt-6'>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Admin Name</Label>  < Input id='name' value={`${notice.admin.firstName} ${notice.admin.middleName} ${notice.admin.lastName}`} disabled />
+                                            <Label>Admin Name</Label>  < Input id='name' disabled />
+                                            {/* <Label>Admin Name</Label>  < Input id='name' value={`${notice.admin.firstName} ${notice.admin.middleName} ${notice.admin.lastName}`} disabled /> */}
                                         </div>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Email Address</Label>  < Input id='email' disabled value={notice.admin.email} />
+                                            <Label>Email Address</Label>  < Input id='email' disabled />
+                                            {/* <Label>Email Address</Label>  < Input id='email' disabled value={notice.admin.email} /> */}
                                         </div>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Admin Id</Label>  < Input id='id' disabled value={notice.adminId} />
+                                            <Label>Admin Id</Label>  < Input id='id'  />
+                                            {/* <Label>Admin Id</Label>  < Input id='id' disabled value={notice.adminId} /> */}
                                         </div>
 
                                     </div>

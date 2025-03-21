@@ -25,6 +25,7 @@ import NoticeCard from "../components/NoticeCard";
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import toast from "react-hot-toast";
 const Page = () => {
   const categories: { value: Category; label: string }[] = [
     { value: "Academic", label: "Academic" },
@@ -124,9 +125,11 @@ const Page = () => {
       });
 
       if (response.data.success) {
+        toast("Notice deleted successfully");
         setNotices((prevNotices) => prevNotices.filter((n) => n.id !== notice_id));
       }
     } catch (error) {
+      toast.error("Failed to delete notice");
       console.error("Error deleting notice:", error);
     }
   };
