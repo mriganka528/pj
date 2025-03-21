@@ -1,9 +1,8 @@
-import { Category, PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient();
+import { Category} from "@prisma/client"
+import prismadb from "../prismadb";
 
 const getCategoryDetails = async (category: Category) => {
-    const count = await prisma.notice.count({
+    const count = await prismadb.notice.count({
         where: {
             category: category,
             status: "ACTIVE"

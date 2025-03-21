@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prismadb from "./prismadb";
 
-const prisma = new PrismaClient()
 const getTotalNotice = async () => {
-    const total_notice = await prisma.notice.count()
+    const total_notice = await prismadb.notice.count()
     return total_notice;
 }
 export default getTotalNotice

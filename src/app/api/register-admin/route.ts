@@ -1,8 +1,7 @@
+import prismadb from "@/lib/prismadb";
 import { adminSchema } from "@/schemas/admin/adminSchema";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-const prisma = new PrismaClient()
 export async function POST(req: Request) {
     try {
         const user = await currentUser()
@@ -23,7 +22,7 @@ export async function POST(req: Request) {
             );
         }
         console.log(firstName, middleName, lastName)
-        const existingAdmin = await prisma.admin.findUnique({
+        const existingAdmin = await prismadb.admin.findUnique({
             where: {
                 clerkId: userId
             }
@@ -33,7 +32,7 @@ export async function POST(req: Request) {
                 success: false, message: "Admin already registered"
             }, { status: 409 })
         }
-        const createdAdmin = await prisma.admin.create({
+        const createdAdmin = await prismadb.admin.create({
             data: {
                 firstName,
                 middleName,

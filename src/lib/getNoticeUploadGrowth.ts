@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
 
-const prisma = new PrismaClient();
+import prismadb from "./prismadb";
 
 async function getNoticeUploadGrowth(): Promise<number> {
     const startOfCurrentMonth = dayjs().startOf("month").toDate();
@@ -9,7 +8,7 @@ async function getNoticeUploadGrowth(): Promise<number> {
     const startOfLastMonth = dayjs().subtract(1, "month").startOf("month").toDate();
     const endOfLastMonth = dayjs().subtract(1, "month").endOf("month").toDate();
 
-    const currentMonthCount = await prisma.notice.count({
+    const currentMonthCount = await prismadb.notice.count({
         where: {
             dateCreated: {
                 gte: startOfCurrentMonth,
@@ -18,7 +17,7 @@ async function getNoticeUploadGrowth(): Promise<number> {
         },
     });
 
-    const lastMonthCount = await prisma.notice.count({
+    const lastMonthCount = await prismadb.notice.count({
         where: {
             dateCreated: {
                 gte: startOfLastMonth,

@@ -1,7 +1,6 @@
+import prismadb from "@/lib/prismadb";
 import { auth,  } from "@clerk/nextjs/server";
-import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
-const prisma = new PrismaClient()
 export default async function RegistratinLayout({
     children,
 }: Readonly<{
@@ -13,7 +12,7 @@ export default async function RegistratinLayout({
         redirect('/sign-in')
 
     }
-    const findAdmin = await prisma.admin.findUnique({
+    const findAdmin = await prismadb.admin.findUnique({
         where: {
             clerkId: userId
         }

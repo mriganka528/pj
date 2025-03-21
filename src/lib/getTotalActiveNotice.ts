@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client"
+import prismadb from "./prismadb";
 
-const prisma = new PrismaClient()
 const getTotalActiveNotice = async () => {
-    const activeNotices = await prisma.notice.count({
+    const activeNotices = await prismadb.notice.count({
         where: {
             status: "ACTIVE"
         }

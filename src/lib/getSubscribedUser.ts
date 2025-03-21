@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client"
+// Code to get the total number of subscribed users from the database
+import prismadb from "./prismadb"
 
-const prisma = new PrismaClient()
 const getSubscribedUser = async () => {
-    const totalSubscribedUser = await prisma.suscribedUser.count()
+    const totalSubscribedUser = await prismadb.suscribedUser.count()
     return totalSubscribedUser
 }
 export default getSubscribedUser

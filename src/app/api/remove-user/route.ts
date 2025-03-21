@@ -1,8 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prismadb from "@/lib/prismadb";
 
 export async function DELETE(req: Request) {
     try {
@@ -28,7 +26,7 @@ export async function DELETE(req: Request) {
         }
 
         // Check if notice exists
-        const existingNotice = await prisma.suscribedUser.findUnique({
+        const existingNotice = await prismadb.suscribedUser.findUnique({
             where: { id: user_id },
         });
 
@@ -40,7 +38,7 @@ export async function DELETE(req: Request) {
         }
 
         // Delete notice
-        const deletedNotice = await prisma.suscribedUser.delete({
+        const deletedNotice = await prismadb.suscribedUser.delete({
             where: { id: user_id },
         });
 

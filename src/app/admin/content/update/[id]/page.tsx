@@ -1,11 +1,10 @@
-import { PrismaClient } from '@prisma/client'
 import React from 'react'
 import UpdateNoticeComponent from '../components/UpdateComponent';
-const prisma = new PrismaClient()
+import prismadb from '@/lib/prismadb';
 const page = async ({ params: paramsPromise }: { params: Promise<{ noticeId: string }> }) => {
     const params = await paramsPromise;
     const noticeId = params.noticeId
-    const fetchedNotice = await prisma.notice.findFirst({
+    const fetchedNotice = await prismadb.notice.findFirst({
         where: {
             id: noticeId
         }

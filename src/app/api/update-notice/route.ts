@@ -1,8 +1,8 @@
+import prismadb from "@/lib/prismadb";
 import { noticeSchema } from "@/schemas/notice/noticeSchema";
 import { currentUser } from "@clerk/nextjs/server";
-import { Category, Priority, PrismaClient, Status } from "@prisma/client";
+import { Category, Priority, Status } from "@prisma/client";
 import { NextResponse } from "next/server";
-const prisma = new PrismaClient()
 export async function PATCH(req: Request) {
     try {
         const user = await currentUser()
@@ -21,7 +21,7 @@ export async function PATCH(req: Request) {
             }, { status: 404 })
         }
 
-        const find_notice = await prisma.notice.findUnique({
+        const find_notice = await prismadb.notice.findUnique({
             where: {
                 id: notice_id
             }
@@ -49,7 +49,7 @@ export async function PATCH(req: Request) {
         }
 
 
-        const updated_notice = await prisma.notice.update({
+        const updated_notice = await prismadb.notice.update({
             where: {
                 id: notice_id
             },

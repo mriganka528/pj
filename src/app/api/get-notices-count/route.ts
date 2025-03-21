@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { currentUser } from "@clerk/nextjs/server";
 import { startOfWeek, endOfWeek, subWeeks } from "date-fns"
-const prisma = new PrismaClient();
+import prismadb from "@/lib/prismadb";
 
 export async function GET(req: Request) {
   try {
@@ -31,7 +30,7 @@ export async function GET(req: Request) {
       endDate = endOfWeek(subWeeks(today, 2))
     }
 
-    const notices = await prisma.notice.findMany({
+    const notices = await prismadb.notice.findMany({
       where: {
         dateCreated: {
           gte: startDate,

@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client"
-const prisma = new PrismaClient()
+import prismadb from "./prismadb"
 const getTotalScheduledNotice = async () => {
-    const scheduledNotice = await prisma.notice.count({
+    const scheduledNotice = await prismadb.notice.count({
         where: {
             status: "SCHEDULED"
         }

@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { currentUser } from "@clerk/nextjs/server";
+import prismadb from "@/lib/prismadb";
 
-const prisma = new PrismaClient();
 
 export async function GET() {
   try {
@@ -15,7 +14,7 @@ export async function GET() {
       );
     }
 
-    const notices = await prisma.notice.findMany({
+    const notices = await prismadb.notice.findMany({
       orderBy: { dateCreated: "desc" }
     });
 

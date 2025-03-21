@@ -1,9 +1,8 @@
+import prismadb from "@/lib/prismadb";
 import Navbar from "./components/Navbar";
 import { auth } from "@clerk/nextjs/server";
-import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { Toaster } from 'react-hot-toast';
-const prisma = new PrismaClient()
 export default async function AdminLayout({
     children,
 }: Readonly<{
@@ -13,7 +12,7 @@ export default async function AdminLayout({
     if (!userId) {
         redirect('/sign-in')
     }
-    const findAdmin = await prisma.admin.findUnique({
+    const findAdmin = await prismadb.admin.findUnique({
         where: {
             clerkId: userId
         }

@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
-import dayjs from "dayjs";
 
-const prisma = new PrismaClient();
+import dayjs from "dayjs";
+import prismadb from "./prismadb";
+
 
 async function getWeeklyNoticeGrowth(): Promise<number> {
     const startOfCurrentWeek = dayjs().startOf("week").toDate();
@@ -9,7 +9,7 @@ async function getWeeklyNoticeGrowth(): Promise<number> {
     const startOfLastWeek = dayjs().subtract(1, "week").startOf("week").toDate();
     const endOfLastWeek = dayjs().subtract(1, "week").endOf("week").toDate();
 
-    const currentWeekCount = await prisma.notice.count({
+    const currentWeekCount = await prismadb.notice.count({
         where: {
             dateCreated: {
                 gte: startOfCurrentWeek,
@@ -18,7 +18,7 @@ async function getWeeklyNoticeGrowth(): Promise<number> {
         },
     });
 
-    const lastWeekCount = await prisma.notice.count({
+    const lastWeekCount = await prismadb.notice.count({
         where: {
             dateCreated: {
                 gte: startOfLastWeek,

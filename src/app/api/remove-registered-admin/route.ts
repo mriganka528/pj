@@ -1,7 +1,6 @@
+import prismadb from "@/lib/prismadb";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-const prisma = new PrismaClient()
 export async function DELETE(req: Request) {
     try {
         const user = await currentUser()
@@ -17,7 +16,7 @@ export async function DELETE(req: Request) {
         console.log("IDDDDDDDDDD", id);
         console.log(userId === id)
         if (userId === id) {
-            const isAdminExist = await prisma.admin.findUnique({
+            const isAdminExist = await prismadb.admin.findUnique({
                 where: {
                     clerkId: id
                 }
@@ -28,7 +27,7 @@ export async function DELETE(req: Request) {
                     { status: 404 }
                 );
             }
-            await prisma.admin.delete({
+            await prismadb.admin.delete({
                 where: {
                     clerkId: id
                 }

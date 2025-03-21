@@ -1,8 +1,8 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { PrismaClient, Status, Category, Priority } from "@prisma/client";
+import { Status, Category, Priority } from "@prisma/client";
 import { noticeSchema } from "@/schemas/notice/noticeSchema";
-const prisma = new PrismaClient();
+import prismadb from "@/lib/prismadb";
 
 export async function POST(req: Request) {
     try {
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
                 { status: 401 }
             );
         }
-        const getAdmin = await prisma.admin.findUnique({
+        const getAdmin = await prismadb.admin.findUnique({
             where: {
                 clerkId: userId
             }
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
         }
 
 
-        const newNotice = await prisma.notice.create({
+        const newNotice = await prismadb.notice.create({
             data: {
                 title,
                 content,

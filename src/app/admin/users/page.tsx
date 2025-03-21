@@ -1,9 +1,9 @@
 import React from 'react'
 import UserManagement from './componenets/UserManagement'
 import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import prismadb from '@/lib/prismadb'
 async function page() {
-    const getSuscribedUsers = await prisma.suscribedUser.findMany()
+    const getSuscribedUsers = await prismadb.suscribedUser.findMany()
     console.log(getSuscribedUsers)
     return (
         <main className="container mx-auto px-4 py-8">
