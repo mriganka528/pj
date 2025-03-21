@@ -31,14 +31,14 @@ const Sidebar = () => {
                         {navItems.map((item) => (
                             <SheetClose key={item.name}>
                                 <motion.li animate={{ opacity: 1, y: 0 }}
-                                    whileHover={{ y: -5 }} className={cn('shadow-md dark:shadow-gray-800 dark:shadow py-2 px-7 rounded-lg', pathname === item.href && "bg-gray-900 font-medium",)}>
+                                    whileHover={{ y: -5 }} className={cn('shadow-md dark:shadow-gray-800 dark:shadow py-2 px-7 rounded-lg', pathname === item.href && "bg-gray-200 dark:bg-gray-900 font-medium",)}>
                                     <SheetClose>
                                         <Link
                                             href={item.href}
 
                                         >
                                             <SheetClose className=
-                                                "flex items-center space-x-3 rounded-lg px-3 py-2 text-muted-foreground  transition-colors">
+                                                "flex items-center space-x-3 rounded-lg px-3 py-2 dark:text-muted-foreground  transition-colors">
                                                 <item.icon className="h-5 w-5" />
                                                 <span className='text-lg'>{item.name}</span>
                                             </SheetClose>

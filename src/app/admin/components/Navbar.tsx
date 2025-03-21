@@ -20,7 +20,7 @@ const Navbar = () => {
     const pathname = usePathname()
 
     return (
-        <nav className=" text-sm sm:text-base bg-background border-b w-svw flex justify-between px-6 py-6 shadow-sm dark:border-border">
+        <nav className=" text-sm sm:text-base bg-background border-b w-svw flex justify-between px-6 py-5 sm:py-6 shadow-sm dark:border-border">
             <Sidebar />
             <div >
                 <h1 className=" max-[768px]:hidden  text-xl md:text-2xl font-bold text-foreground">Admin Control Center</h1>
