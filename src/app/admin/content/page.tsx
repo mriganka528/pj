@@ -20,7 +20,6 @@ const Page = () => {
       const response = await axios.get("/api/get-notices");
       if (response.data.success) {
         const allNotices = response.data.notices;
-        console.log(allNotices)
         const currentDate = new Date()
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();

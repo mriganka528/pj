@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Notice {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid())
   title       String
   content     String
   status      Status
@@ -16,8 +16,8 @@ model Notice {
   dateCreated DateTime @default(now())
   noticeURL   String
   priority    Priority
-  admin       Admin    @relation(fields: [adminId], references: [id])
-  adminId     String   @db.ObjectId
+  admin       Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  adminId     String
 }
 
 enum Priority {
@@ -47,7 +47,7 @@ enum Category {
 }
 
 model SuscribedUser {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(uuid())
   name      String
   email     String   @unique
   createdAt DateTime @default(now())
@@ -55,7 +55,7 @@ model SuscribedUser {
 }
 
 model Admin {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(uuid())
   firstName  String
   middleName String?
   lastName   String

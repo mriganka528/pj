@@ -1,7 +1,7 @@
 {
   "build": {
     "env": {
-      "DATABASE_URL": "mongodb+srv://mrj21012003:5HQzScsaEkd5iozA@cluster0.hcyj4.mongodb.net/BulletinX?retryWrites=true&w=majority&appName=Cluster0"
+      "DATABASE_URL": "postgresql://neondb_owner:npg_jQUtCN6wv0Mm@ep-damp-cloud-a5aiogxy-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"
     }
   }
 }

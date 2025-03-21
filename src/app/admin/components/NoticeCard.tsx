@@ -14,6 +14,7 @@ import React, { useState } from 'react'
 import { toast } from 'sonner'
 
 const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: string) => void }) => {
+
     const getPriorityColor = (priority: string) => {
         switch (priority) {
             case "High":
@@ -105,23 +106,23 @@ const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: strin
                         {notice.category}
                     </Badge>
                     <AlertDialog >
-                        <AlertDialogTrigger><Badge variant="outline" className="flex items-center gap-1">
+                        <AlertDialogTrigger asChild><Badge variant="outline" className="flex items-center gap-1">
                             <ShieldQuestion className="h-3 w-3 mr-1" />
-                            Uploader details
+                            Uploader Details
                         </Badge></AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
                                 <AlertDialogTitle>Uploader Details</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    <div className=' flex flex-col space-y-5 mt-6'>
-                                        <div>
-                                            <Label>Admin Name</Label>  < Input id='name' />
+                                    <div className=' flex flex-col space-y-7 mt-6'>
+                                        <div className='flex flex-col space-y-1 justify-start items-start'>
+                                            <Label>Admin Name</Label>  < Input id='name' value={`${notice.admin.firstName} ${notice.admin.middleName} ${notice.admin.lastName}`} disabled />
                                         </div>
-                                        <div>
-                                            <Label>Email Address</Label>  < Input id='email' />
+                                        <div className='flex flex-col space-y-1 justify-start items-start'>
+                                            <Label>Email Address</Label>  < Input id='email' disabled value={notice.admin.email} />
                                         </div>
-                                        <div>
-                                            <Label>Admin Id</Label>  < Input id='id' />
+                                        <div className='flex flex-col space-y-1 justify-start items-start'>
+                                            <Label>Admin Id</Label>  < Input id='id' disabled value={notice.adminId} />
                                         </div>
 
                                     </div>

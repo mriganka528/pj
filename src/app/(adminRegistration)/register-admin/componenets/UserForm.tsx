@@ -12,7 +12,7 @@ import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 // Define the form schema with validation
 const formSchema = z.object({
@@ -48,14 +48,14 @@ export default function UserForm() {
       })
       if (response.status === 200) {
         router.replace('/admin')
+      }else{
+        toast.error("Failed to register admin")
       }
     } catch (error) {
       toast.error("Falied to register admin")
       console.error(error)
     }
-    finally {
-      setIsSubmitting(false)
-    }
+
   }
 
   return (

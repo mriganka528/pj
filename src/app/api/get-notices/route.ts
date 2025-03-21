@@ -15,7 +15,10 @@ export async function GET() {
     }
 
     const notices = await prismadb.notice.findMany({
-      orderBy: { dateCreated: "desc" }
+      orderBy: { dateCreated: "desc" },
+      include: {
+        admin: true
+      }
     });
 
     return NextResponse.json({ success: true, notices });

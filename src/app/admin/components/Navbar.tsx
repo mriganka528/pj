@@ -21,10 +21,16 @@ const Navbar = () => {
 
     return (
         <nav className=" text-sm sm:text-base bg-background border-b w-svw flex justify-between px-6 py-6 shadow-sm dark:border-border">
-            <div >
-                <h1 className="text-xl md:text-2xl font-bold text-foreground">Admin Control Center</h1>
-            </div>
             <Sidebar />
+            <div >
+                <h1 className=" max-[768px]:hidden  text-xl md:text-2xl font-bold text-foreground">Admin Control Center</h1>
+
+                {/* Mobile navigation content */}
+                <div className=" flex justify-center items-center  space-x-3 min-[768px]:hidden">
+                    <ModeToggle />
+                    <UserButton />
+                </div>
+            </div>
             <ul className="space-x-2 flex max-[768px]:hidden ">
                 {navItems.map((item) => (
                     <li key={item.name}>
