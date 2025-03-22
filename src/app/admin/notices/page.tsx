@@ -28,7 +28,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import toast from "react-hot-toast";
 import { Label } from "@radix-ui/react-label";
 import { Calendar } from "@/components/ui/calendar";
-import { format, isAfter, isBefore, isValid } from "date-fns"
+// import { format, isAfter, isBefore, isValid } from "date-fns"
 type NoticeWithAdmin = Prisma.NoticeGetPayload<{
   include: { admin: true };
 }>;
@@ -58,12 +58,12 @@ const Page = () => {
   const [selectedTab, setSelectedTab] = useState("all");
   const [notices, setNotices] = useState<NoticeWithAdmin[]>([]);
   const [loading, setLoading] = useState(false);
-  const [openDatePicker, setOpenDatePicker] = useState(false)
-  const [startDate, setStartDate] = useState<Date | undefined>(undefined)
-  const [endDate, setEndDate] = useState<Date | undefined>(undefined)
+  // const [openDatePicker, setOpenDatePicker] = useState(false)
+  // const [startDate, setStartDate] = useState<Date | undefined>(undefined)
+  // const [endDate, setEndDate] = useState<Date | undefined>(undefined)
 
   // Current date for disabling future dates
-  const today = new Date()
+  // const today = new Date()
 
   // Toggle category selection
   const toggleCategory = (category: Category) => {
@@ -87,15 +87,15 @@ const Page = () => {
     setSelectedCategories([]);
     setSelectedPriorities([]);
     setSearchQuery("");
-    setStartDate(undefined)
-    setEndDate(undefined)
+    // setStartDate(undefined)
+    // setEndDate(undefined)
   };
 
   // Clear date range
-  const clearDateRange = () => {
-    setStartDate(undefined)
-    setEndDate(undefined)
-  }
+  // const clearDateRange = () => {
+  //   setStartDate(undefined)
+  //   setEndDate(undefined)
+  // }
 
   // Fetch notices when tab or category changes
   useEffect(() => {
@@ -135,11 +135,11 @@ const Page = () => {
     const matchesPriority = selectedPriorities.length === 0 || selectedPriorities.includes(notice.priority)
     // Date range filter
     const noticeDate = new Date(notice.dateCreated)
-    const matchesDateRange =
-      (!startDate || (isValid(startDate) && !isBefore(noticeDate, startDate))) &&
-      (!endDate || (isValid(endDate) && !isAfter(noticeDate, endDate)))
+    // const matchesDateRange =
+    //   (!startDate || (isValid(startDate) && !isBefore(noticeDate, startDate))) &&
+    //   (!endDate || (isValid(endDate) && !isAfter(noticeDate, endDate)))
 
-    return matchesSearch && matchesTab && matchesCategory && matchesPriority && matchesDateRange
+    return matchesSearch && matchesTab && matchesCategory && matchesPriority
   })
   // handle delete
   const handleDelete = async (notice_id: string) => {
@@ -164,17 +164,17 @@ const Page = () => {
       }
     }
   };
-  // Get date range display text
-  const getDateRangeText = () => {
-    if (startDate && endDate) {
-      return `${format(startDate, "MMM dd, yyyy")} - ${format(endDate, "MMM dd, yyyy")}`
-    } else if (startDate) {
-      return `From ${format(startDate, "MMM dd, yyyy")}`
-    } else if (endDate) {
-      return `Until ${format(endDate, "MMM dd, yyyy")}`
-    }
-    return "Select Date Range"
-  }
+  // // Get date range display text
+  // const getDateRangeText = () => {
+  //   if (startDate && endDate) {
+  //     return `${format(startDate, "MMM dd, yyyy")} - ${format(endDate, "MMM dd, yyyy")}`
+  //   } else if (startDate) {
+  //     return `From ${format(startDate, "MMM dd, yyyy")}`
+  //   } else if (endDate) {
+  //     return `Until ${format(endDate, "MMM dd, yyyy")}`
+  //   }
+  //   return "Select Date Range"
+  // }
 
   return (
     <div className="container mx-auto py-6 space-y-6">
@@ -272,7 +272,7 @@ const Page = () => {
           </Popover>
 
           {/* Date Range filter */}
-          <Popover open={openDatePicker} onOpenChange={setOpenDatePicker}>
+          {/* <Popover open={openDatePicker} onOpenChange={setOpenDatePicker}>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
@@ -347,7 +347,7 @@ const Page = () => {
                 </div>
               </div>
             </PopoverContent>
-          </Popover>
+          </Popover> */}
 
           {/* Clear Filters Button */}
           {(selectedCategories.length > 0 || selectedPriorities.length > 0 || searchQuery) && (
