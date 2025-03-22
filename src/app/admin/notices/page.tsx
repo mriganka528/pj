@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {  Category, Priority, Prisma } from "@prisma/client";
+import { Category, Priority, Prisma } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,15 +19,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Check, ChevronDown, Search, X } from "lucide-react";
+import { CalendarIcon, Check, ChevronDown, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import NoticeCard from "../components/NoticeCard";
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import toast from "react-hot-toast";
+import { Label } from "@radix-ui/react-label";
+import { Calendar } from "@/components/ui/calendar";
+import { format, isAfter, isBefore, isValid } from "date-fns"
 type NoticeWithAdmin = Prisma.NoticeGetPayload<{
-    include: { admin: true };
+  include: { admin: true };
 }>;
 const Page = () => {
   const categories: { value: Category; label: string }[] = [
@@ -55,6 +58,12 @@ const Page = () => {
   const [selectedTab, setSelectedTab] = useState("all");
   const [notices, setNotices] = useState<NoticeWithAdmin[]>([]);
   const [loading, setLoading] = useState(false);
+  const [openDatePicker, setOpenDatePicker] = useState(false)
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined)
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined)
+
+  // Current date for disabling future dates
+  const today = new Date()
 
   // Toggle category selection
   const toggleCategory = (category: Category) => {
@@ -78,7 +87,15 @@ const Page = () => {
     setSelectedCategories([]);
     setSelectedPriorities([]);
     setSearchQuery("");
+    setStartDate(undefined)
+    setEndDate(undefined)
   };
+
+  // Clear date range
+  const clearDateRange = () => {
+    setStartDate(undefined)
+    setEndDate(undefined)
+  }
 
   // Fetch notices when tab or category changes
   useEffect(() => {
@@ -116,9 +133,13 @@ const Page = () => {
 
     // Priority filter
     const matchesPriority = selectedPriorities.length === 0 || selectedPriorities.includes(notice.priority)
+    // Date range filter
+    const noticeDate = new Date(notice.dateCreated)
+    const matchesDateRange =
+      (!startDate || (isValid(startDate) && !isBefore(noticeDate, startDate))) &&
+      (!endDate || (isValid(endDate) && !isAfter(noticeDate, endDate)))
 
-
-    return matchesSearch && matchesTab && matchesCategory && matchesPriority
+    return matchesSearch && matchesTab && matchesCategory && matchesPriority && matchesDateRange
   })
   // handle delete
   const handleDelete = async (notice_id: string) => {
@@ -132,10 +153,28 @@ const Page = () => {
         setNotices((prevNotices) => prevNotices.filter((n) => n.id !== notice_id));
       }
     } catch (error) {
-      toast.error("Failed to delete notice");
-      console.error("Error deleting notice:", error);
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("You are not authorized to perform this action");
+        } else {
+          toast.error("Failed to delete the notice");
+        }
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     }
   };
+  // Get date range display text
+  const getDateRangeText = () => {
+    if (startDate && endDate) {
+      return `${format(startDate, "MMM dd, yyyy")} - ${format(endDate, "MMM dd, yyyy")}`
+    } else if (startDate) {
+      return `From ${format(startDate, "MMM dd, yyyy")}`
+    } else if (endDate) {
+      return `Until ${format(endDate, "MMM dd, yyyy")}`
+    }
+    return "Select Date Range"
+  }
 
   return (
     <div className="container mx-auto py-6 space-y-6">
@@ -232,6 +271,83 @@ const Page = () => {
             </PopoverContent>
           </Popover>
 
+          {/* Date Range filter */}
+          <Popover open={openDatePicker} onOpenChange={setOpenDatePicker}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn("h-10 justify-between", (startDate || endDate) && "text-primary")}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {getDateRangeText()}
+                <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-4" align="end">
+              <div className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="start-date  ">Start Date</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="start-date"
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !startDate && "text-muted-foreground",
+                        )}
+                      >
+                        {startDate ? format(startDate, "PPP") : "Select start date"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={startDate}
+                        onSelect={setStartDate}
+                        disabled={(date) => isAfter(date, today) || (endDate ? isAfter(date, endDate) : false)}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="end-date">End Date</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="end-date"
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !endDate && "text-muted-foreground",
+                        )}
+                      >
+                        {endDate ? format(endDate, "PPP") : "Select end date"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={endDate}
+                        onSelect={setEndDate}
+                        disabled={(date) => isAfter(date, today) || (startDate ? isBefore(date, startDate) : false)}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="flex justify-between">
+                  <Button variant="outline" size="sm" onClick={clearDateRange}>
+                    Clear
+                  </Button>
+                  <Button size="sm" onClick={() => setOpenDatePicker(false)}>
+                    Apply
+                  </Button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
 
           {/* Clear Filters Button */}
           {(selectedCategories.length > 0 || selectedPriorities.length > 0 || searchQuery) && (

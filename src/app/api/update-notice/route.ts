@@ -1,18 +1,31 @@
 import prismadb from "@/lib/prismadb";
 import { noticeSchema } from "@/schemas/notice/noticeSchema";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { Category, Priority, Status } from "@prisma/client";
 import { NextResponse } from "next/server";
 export async function PATCH(req: Request) {
     try {
         const user = await currentUser()
-
-        if (!user) {
+        const { userId } = await auth()
+        if (!user || !userId) {
             return NextResponse.json(
                 { success: false, message: "Authentication error" },
                 { status: 401 }
             );
         }
+        //check if admin exist or not
+        const isAdminExisted = await prismadb.admin.findUnique({
+            where: {
+                clerkId: userId
+            }
+        })
+        if (!isAdminExisted) {
+            return NextResponse.json(
+                { success: false, message: "You are not authorized to perform this action" },
+                { status: 401 }
+            );
+        }
+
         const url = new URL(req.url);
         const notice_id = url.searchParams.get("id")
         if (!notice_id) {
@@ -31,7 +44,12 @@ export async function PATCH(req: Request) {
                 success: false, message: "No notice found"
             }, { status: 404 })
         }
-
+        if (find_notice.adminId !== isAdminExisted.id) {
+            return NextResponse.json(
+                { success: false, message: "You are not authorized to perform this action" },
+                { status: 401 }
+            );
+        }
         const formData = await req.formData()
         const title = formData.get("title") as string;
         const content = formData.get("content") as string;

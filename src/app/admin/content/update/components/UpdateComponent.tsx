@@ -13,7 +13,7 @@ import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { toast } from 'sonner'
+import { toast } from 'react-hot-toast'
 import { Notice } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
@@ -58,14 +58,25 @@ const UpdateNoticeComponent = ({ notice }: { notice: Notice }) => {
         data.append("priority", priority);
 
         try {
-             await axios.patch(`/api/update-notice?id=${notice.id}`, data, {
+            const response = await axios.patch(`/api/update-notice?id=${notice.id}`, data, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
-            toast.success("Notice updated successfully");
-            router.back();
+            if (response.status === 200) {
+                toast.success("Notice updated successfully");
+                router.back();
+
+            }
         } catch (error) {
-            console.error(error)
-          toast.error("failed to update the notice")
+            if (axios.isAxiosError(error)) {
+                if (error.response?.status === 401) {
+                    toast.error("You are not authorized to perform this action");
+                } else {
+                    toast.error("Failed to update the notice");
+                }
+            } else {
+                toast.error("An unexpected error occurred");
+            }
+            router.back()
         }
         setSubmitting(false)
     }

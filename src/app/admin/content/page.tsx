@@ -57,8 +57,15 @@ const Page = () => {
         toast.success("Notice deleted successfully")
       }
     } catch (error) {
-      console.error(error)
-      toast.error("Failed to delete the notice")
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("You are not authorized to perform this action");
+        } else {
+          toast.error("Failed to delete the notice");
+        }
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     }
   };
 
@@ -76,7 +83,7 @@ const Page = () => {
             // Loading skeletons
             <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {
-                Array.from({ length: 6}).map((_, index) => (
+                Array.from({ length: 6 }).map((_, index) => (
                   <Card key={index} className="overflow-hidden">
                     <CardContent className="p-0">
                       <div className="p-6 space-y-4">
