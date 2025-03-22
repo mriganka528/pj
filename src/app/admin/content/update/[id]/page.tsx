@@ -1,9 +1,10 @@
 import React from 'react'
 import UpdateNoticeComponent from '../components/UpdateComponent';
 import prismadb from '@/lib/prismadb';
-const page = async ({ params: paramsPromise }: { params: Promise<{ noticeId: string }> }) => {
+const page = async ({ params: paramsPromise }: { params: Promise<{ id: string }> }) => {
     const params = await paramsPromise;
-    const noticeId = params.noticeId
+    const noticeId =  params.id
+    console.log("Notice Id",noticeId)
     const fetchedNotice = await prismadb.notice.findFirst({
         where: {
             id: noticeId

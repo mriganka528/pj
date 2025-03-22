@@ -44,7 +44,7 @@ const Page = () => {
   };
   useEffect(() => {
     fetchNotices();
-  }, []);
+  }, [uploading]);
 
   const handleDelete = async (notice_id: string) => {
     try {

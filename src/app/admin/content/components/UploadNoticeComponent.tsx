@@ -9,7 +9,7 @@ import FileUpload from "@/components/FileUpload"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import axios from 'axios'
 import { noticeSchema } from '@/schemas/notice/noticeSchema'
-import {  z } from 'zod'
+import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -45,7 +45,6 @@ const UploadNoticeComponent = ({ setIsUploading }: { setIsUploading: React.Dispa
     const [submitting, setSubmitting] = useState<boolean>(false)
     const router = useRouter()
     const onSubmit = async (values: z.infer<typeof noticeSchema>) => {
-        setIsUploading(true)
         const { title, content, status, category, fileUrl, priority } = values
         setSubmitting(true)
         const data = new FormData();
@@ -57,21 +56,22 @@ const UploadNoticeComponent = ({ setIsUploading }: { setIsUploading: React.Dispa
         data.append("priority", priority);
         try {
             setSubmitting(true)
-            toast.promise(
-                axios.post('/api/upload-notice', data, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                }),
-                {
-                    loading: 'Uploading...',
-                    success: <b>Notice uploaded successfully!</b>,
-                    error: <b>Failed to upload the notice.</b>,
-                }
-            ).then(() => {
-                form.reset();
-                toast.success("Notice uploaded successfully")
-                setSelectedFiles("");
-                router.refresh();
-            });
+            setIsUploading(true)
+            await
+                toast.promise(
+                    axios.post('/api/upload-notice', data, {
+                        headers: { "Content-Type": "multipart/form-data" }
+                    }),
+                    {
+                        loading: 'Uploading...',
+                        success: <b>Notice uploaded successfully!</b>,
+                        error: <b>Failed to upload the notice.</b>,
+                    }
+                ).then(() => {
+                    form.reset();
+                    setSelectedFiles("");
+                    router.refresh();
+                });
         } catch (error) {
             console.log(error)
             toast.error("Failed to save the notice")
