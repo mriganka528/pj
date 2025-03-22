@@ -11,8 +11,12 @@ import SettingsContent from "./SettingsContent"
 import { SignOutButton } from "@clerk/nextjs"
 import { Admin } from "@prisma/client"
 interface Props {
-  registeredAdmins: Admin[],
-  userId: string
+  registeredAdmins: (Admin & {
+    _count: {
+      Notice: number; 
+    };
+  })[];
+  userId: string;
 }
 
 export default function SettingsComponent({ registeredAdmins, userId }: Props) {

@@ -14,10 +14,11 @@ type NoticeWithAdmin = Prisma.NoticeGetPayload<{
 }>;
 const Page = () => {
   const [notices, setNotices] = useState<NoticeWithAdmin[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [uploading, setIsUploading] = useState<boolean>(false);
   const fetchNotices = async () => {
     try {
+      setLoading(true);
       const response = await axios.get("/api/get-notices");
       if (response.data.success) {
         const allNotices = response.data.notices;
@@ -26,7 +27,7 @@ const Page = () => {
         const currentYear = currentDate.getFullYear();
         // Filter notices for the current month
         const filteredNotices = allNotices.filter((notice: NoticeWithAdmin) => {
-          const noticeDate = new Date(notice.dateCreated); // Ensure 'uploadDate' is in ISO format in DB
+          const noticeDate = new Date(notice.dateCreated);
           return (
             noticeDate.getMonth() === currentMonth &&
             noticeDate.getFullYear() === currentYear
@@ -43,7 +44,7 @@ const Page = () => {
   };
   useEffect(() => {
     fetchNotices();
-  }, [uploading]);
+  }, []);
 
   const handleDelete = async (notice_id: string) => {
     try {
@@ -75,7 +76,7 @@ const Page = () => {
             // Loading skeletons
             <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {
-                Array.from({ length: Number(notices.length) }).map((_, index) => (
+                Array.from({ length: 6}).map((_, index) => (
                   <Card key={index} className="overflow-hidden">
                     <CardContent className="p-0">
                       <div className="p-6 space-y-4">

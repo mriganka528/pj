@@ -16,7 +16,11 @@ interface SettingsContentProps {
     theme: string | undefined;
     setTheme: (theme: string) => void;
     tabId: string;
-    registeredAdmins: Admin[]
+    registeredAdmins: (Admin & {
+        _count: {
+            Notice: number; 
+        };
+    })[];
     userId: string
 }
 
@@ -191,8 +195,8 @@ const SettingsContent = ({ tabId, theme, setTheme, registeredAdmins, userId }: S
                                                 </div>
                                             </div>
                                             <div className="flex sm:flex-col flex-wrap gap-3 text-sm">
-                                                <div className="rounded-md bg-secondary px-2 py-1">Id: {admin.id}</div>
-                                                {/* <div className="rounded-md bg-secondary px-2 py-1">Notices: {admin}</div> */}
+                                                <div className="rounded-md bg-secondary px-2 text-xs md:text-sm py-1">Id: {admin.id}</div>
+                                                <div className="rounded-md bg-secondary px-2 text-xs md:text-sm py-1">Notices Uploaded: {admin._count.Notice }</div>
                                                 <motion.div whileHover={{ scale: 1.01 }}
                                                     whileTap={{ scale: 0.98 }} className="flex justify-end">{
                                                         (loading && admin.clerkId == userId) ? <Loader2 className=" animate-spin text-red-800" /> : (
@@ -200,7 +204,8 @@ const SettingsContent = ({ tabId, theme, setTheme, registeredAdmins, userId }: S
                                                                 <AlertDialogTrigger asChild>
                                                                     <Button
                                                                         disabled={admin.clerkId !== userId}
-                                                                        className="text-sm px-3 py-1 rounded-md bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors"
+                                                                        size={"sm"}
+                                                                        className="text-sm rounded-md bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors"
                                                                     >
                                                                         Remove Registration
                                                                     </Button>

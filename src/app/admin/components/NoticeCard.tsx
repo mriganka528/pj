@@ -35,7 +35,6 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
         setIsDeleting(true);
         try {
             onDelete(notice.id);
-            toast("Notice deleted successfully");
         } catch (error) {
             console.error("Error deleting notice:", error);
             toast.error("Failed to delete notice");
@@ -115,10 +114,10 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                         <DialogContent>
                             <DialogHeader>
                                 <DialogTitle>Uploader Details</DialogTitle>
-                                <DialogDescription>
+                                <DialogDescription asChild>
                                     <div className=' flex flex-col space-y-7 mt-6'>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Admin Name</Label>  < Input id='name' defaultValue={`${notice.admin.firstName} ${notice.admin.middleName} ${notice.admin.lastName}`} disabled />
+                                            <Label>Admin Name</Label>  < Input id='name' defaultValue={`${notice.admin.firstName}${(notice.admin.middleName)?.length !== 0 ? `${notice.admin.middleName}` : ""}${notice.admin.lastName}`} disabled />
                                         </div>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
                                             <Label>Email Address</Label>  < Input id='email' disabled defaultValue={notice.admin.email} />
@@ -134,8 +133,8 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                     </Dialog>
                 </div>
             </CardContent>
-            <CardFooter className="flex justify-between pt-2">
-                <div className="text-xs text-muted-foreground">Notice Id: {notice.id}</div>
+            <CardFooter className="flex justify-between pt-2 space-x-1">
+                <div className="text-xs text-muted-foreground ">Notice Id: {notice.id}</div>
                 <Badge className={getPriorityColor(notice.priority)}>
                     <AlertCircle className="h-3 w-3 mr-1" />
                     {notice.priority}
