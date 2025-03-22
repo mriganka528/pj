@@ -25,7 +25,7 @@ const Sidebar = () => {
         <div className='min-[768px]:hidden'>
             <Sheet>
                 <SheetTrigger><PanelTopOpen /></SheetTrigger>
-                <SheetContent side={'top'} className='flex flex-col items-center justify-center space-y-4 py-10'>
+                <SheetContent side={'top'} className='flex dark:bg-transparent dark:backdrop-blur-sm flex-col items-center justify-center space-y-4 py-10'>
                     <SheetTitle className='text-3xl'>BulletinX</SheetTitle>
                     <ul className='flex flex-col  justify-between space-y-10 py-10'>
                         {navItems.map((item) => (
