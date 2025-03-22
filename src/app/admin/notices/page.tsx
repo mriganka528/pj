@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CalendarIcon, Check, ChevronDown, Search, X } from "lucide-react";
+import { Check, ChevronDown, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import NoticeCard from "../components/NoticeCard";
 import { motion } from "framer-motion"
@@ -134,7 +134,7 @@ const Page = () => {
     // Priority filter
     const matchesPriority = selectedPriorities.length === 0 || selectedPriorities.includes(notice.priority)
     // Date range filter
-    const noticeDate = new Date(notice.dateCreated)
+    // const noticeDate = new Date(notice.dateCreated)
     // const matchesDateRange =
     //   (!startDate || (isValid(startDate) && !isBefore(noticeDate, startDate))) &&
     //   (!endDate || (isValid(endDate) && !isAfter(noticeDate, endDate)))
