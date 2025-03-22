@@ -26,8 +26,8 @@ import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import toast from "react-hot-toast";
-import { Label } from "@radix-ui/react-label";
-import { Calendar } from "@/components/ui/calendar";
+// import { Label } from "@radix-ui/react-label";
+// import { Calendar } from "@/components/ui/calendar";
 // import { format, isAfter, isBefore, isValid } from "date-fns"
 type NoticeWithAdmin = Prisma.NoticeGetPayload<{
   include: { admin: true };
