@@ -3,16 +3,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UploadNoticeComponent from "./components/UploadNoticeComponent";
-import { Notice } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import NoticeCard from "../components/NoticeCard";
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import toast from "react-hot-toast";
-
-
+type NoticeWithAdmin = Prisma.NoticeGetPayload<{
+  include: { admin: true };
+}>;
 const Page = () => {
-  const [notices, setNotices] = useState<Notice[]>([]);
+  const [notices, setNotices] = useState<NoticeWithAdmin[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setIsUploading] = useState<boolean>(false);
   const fetchNotices = async () => {
@@ -24,7 +25,7 @@ const Page = () => {
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
         // Filter notices for the current month
-        const filteredNotices = allNotices.filter((notice: Notice) => {
+        const filteredNotices = allNotices.filter((notice: NoticeWithAdmin) => {
           const noticeDate = new Date(notice.dateCreated); // Ensure 'uploadDate' is in ISO format in DB
           return (
             noticeDate.getMonth() === currentMonth &&
@@ -74,7 +75,7 @@ const Page = () => {
             // Loading skeletons
             <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {
-                Array.from({ length: 6 }).map((_, index) => (
+                Array.from({ length: Number(notices.length) }).map((_, index) => (
                   <Card key={index} className="overflow-hidden">
                     <CardContent className="p-0">
                       <div className="p-6 space-y-4">

@@ -3,17 +3,20 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-import { Notice } from '@prisma/client'
+import { Notice, Prisma } from '@prisma/client'
 import { AlertCircle, ArrowLeft, FileText, FolderOpen, MoreHorizontal, PencilLine, ShieldQuestion, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
-
-const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: string) => void }) => {
+type NoticeWithAdmin = Prisma.NoticeGetPayload<{
+    include: { admin: true };
+}>;
+const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (id: string) => void }) => {
     const getPriorityColor = (priority: string) => {
         switch (priority) {
             case "High":
@@ -104,36 +107,31 @@ const NoticeCard = ({ notice, onDelete }: { notice: Notice; onDelete: (id: strin
                         <FolderOpen className="h-3 w-3 mr-1" />
                         {notice.category}
                     </Badge>
-                    <AlertDialog >
-                        <AlertDialogTrigger asChild><Badge variant="outline" className="flex items-center gap-1">
+                    <Dialog>
+                        <DialogTrigger><Badge variant="outline" className="flex items-center gap-1">
                             <ShieldQuestion className="h-3 w-3 mr-1" />
                             Uploader Details
-                        </Badge></AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>Uploader Details</AlertDialogTitle>
-                                <AlertDialogDescription>
+                        </Badge></DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Uploader Details</DialogTitle>
+                                <DialogDescription>
                                     <div className=' flex flex-col space-y-7 mt-6'>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Admin Name</Label>  < Input id='name' />
-                                            {/* <Label>Admin Name</Label>  < Input id='name' value={`${notice.admin.firstName} ${notice.admin.middleName} ${notice.admin.lastName}`} disabled /> */}
+                                            <Label>Admin Name</Label>  < Input id='name' defaultValue={`${notice.admin.firstName} ${notice.admin.middleName} ${notice.admin.lastName}`} disabled />
                                         </div>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Email Address</Label>  < Input id='email'  />
-                                            {/* <Label>Email Address</Label>  < Input id='email' disabled value={notice.admin.email} /> */}
+                                            <Label>Email Address</Label>  < Input id='email' disabled defaultValue={notice.admin.email} />
                                         </div>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Admin Id</Label>  < Input id='id' disabled value={notice.adminId} />
+                                            <Label>Admin Id</Label>  < Input id='id' disabled defaultValue={notice.adminId} />
                                         </div>
 
                                     </div>
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel><ArrowLeft /> Go Back</AlertDialogCancel>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
+                                </DialogDescription>
+                            </DialogHeader>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </CardContent>
             <CardFooter className="flex justify-between pt-2">

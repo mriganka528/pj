@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Notice, Category, Priority } from "@prisma/client";
+import {  Category, Priority, Prisma } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +26,9 @@ import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import toast from "react-hot-toast";
+type NoticeWithAdmin = Prisma.NoticeGetPayload<{
+    include: { admin: true };
+}>;
 const Page = () => {
   const categories: { value: Category; label: string }[] = [
     { value: "Academic", label: "Academic" },
@@ -50,7 +53,7 @@ const Page = () => {
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const [selectedPriorities, setSelectedPriorities] = useState<Priority[]>([]);
   const [selectedTab, setSelectedTab] = useState("all");
-  const [notices, setNotices] = useState<Notice[]>([]);
+  const [notices, setNotices] = useState<NoticeWithAdmin[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Toggle category selection
