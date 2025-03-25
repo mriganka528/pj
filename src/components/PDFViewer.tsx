@@ -36,6 +36,7 @@ const PDFViewer: React.FC<Props> = ({ pdfUrl }) => {
     const downloadPDF = () => {
         const link = document.createElement("a")
         link.href = pdfUrl
+        link.target = "_blank"
         const fileName = pdfUrl.split("/").pop() || "document.pdf"
         link.download = fileName
         // Append to the document, click it, and remove it
