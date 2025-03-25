@@ -12,9 +12,9 @@ const GoBackComponent = () => {
     return (
         <div>
             <Button variant={'secondary'} className='flex items-center justify-center -space-x-1' onClick={handleClick} >
-                <ChevronLeft className='h-7 w-7' />
+                <ChevronLeft className='h-8 w-8' />
                 <span>
-                    Go Back
+                    Back
                 </span>
             </Button>
         </div>

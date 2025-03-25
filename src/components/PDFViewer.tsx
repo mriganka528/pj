@@ -81,9 +81,8 @@ const PDFViewer: React.FC<Props> = ({ pdfUrl }) => {
                 </Button>
             </div>
             {/* Download Button */}
-            <Button onClick={downloadPDF} variant="default" className="my-3">
+            <Button onClick={downloadPDF} variant="secondary" className="my-1">
                 <Download className="h-4 w-4 " />
-    
             </Button>
             {/* PDF Viewer */}
             <div className="border rounded-lg p-4 bg-white shadow-inner">
