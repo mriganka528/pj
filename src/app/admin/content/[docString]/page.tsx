@@ -1,6 +1,7 @@
 import PDFViewer from '@/components/PDFViewer'
 import React from 'react'
 import GoBackComponent from '../components/GoBackComponent';
+import DownloadNoticeComponent from '../components/DownloadNoticeComponent';
 
 const PDF_HOST_URL = process.env.NEXT_PUBLIC_PDF_HOST_URL
 
@@ -11,7 +12,10 @@ const page = async ({ params: paramsPromise }: { params: Promise<{ docString: st
     const pdfUrl = `${PDF_HOST_URL + params.docString}`
     return (
         <div className='flex flex-col space-y-5' >
+            <div className='flex justify-between items-center'>
             <GoBackComponent />
+            <DownloadNoticeComponent pdfUrl={pdfUrl} />
+            </div>
             <PDFViewer pdfUrl={pdfUrl} />
         </div>
     )

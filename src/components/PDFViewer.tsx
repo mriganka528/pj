@@ -7,7 +7,7 @@ import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft, ChevronRight, Download, ZoomIn, ZoomOut } from "lucide-react";
+import { ChevronLeft, ChevronRight,  ZoomIn, ZoomOut } from "lucide-react";
 
 // Set up the PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -33,17 +33,7 @@ const PDFViewer: React.FC<Props> = ({ pdfUrl }) => {
         setScale((prev) => Math.max(0.5, Math.min(2, prev + delta)));
     }
 
-    const downloadPDF = () => {
-        const link = document.createElement("a")
-        link.href = pdfUrl
-        link.target = "_blank"
-        const fileName = pdfUrl.split("/").pop() || "document.pdf"
-        link.download = fileName
-        // Append to the document, click it, and remove it
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-    }
+
     return (
         <div className="flex flex-col items-center">
             {/* Controls */}
@@ -80,10 +70,7 @@ const PDFViewer: React.FC<Props> = ({ pdfUrl }) => {
                     <ZoomIn className="h-4 w-4" />
                 </Button>
             </div>
-            {/* Download Button */}
-            <Button onClick={downloadPDF} variant="secondary" className="my-1">
-                <Download className="h-4 w-4 " />
-            </Button>
+        
             {/* PDF Viewer */}
             <div className="border rounded-lg p-4 bg-white shadow-inner">
                 <Document
