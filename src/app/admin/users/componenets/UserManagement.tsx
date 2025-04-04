@@ -241,7 +241,7 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
                                         </Badge>
                                         <div>
                                             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                                                <DialogTrigger asChild>
+                                                <DialogTrigger asChild >
                                                     <Button
                                                         size="icon"
                                                         variant="ghost"
