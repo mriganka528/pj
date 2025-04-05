@@ -24,7 +24,7 @@ export default async function AdminLayout({
     return (
         <>
             <Navbar />
-            <div className="p-5 sm:p-10 w-svw">
+            <div className="px-5 py-24 sm:px-10 sm:py-32 w-svw">
                 {children}
                 <Toaster position="top-center"
                     reverseOrder={false} />
