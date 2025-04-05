@@ -6,7 +6,7 @@ const page = () => {
     <div>
       <div className='flex justify-between w-full px-3'>
         Notice page
-        <Link href={'/sign-in'}>Sign in</Link>
+        <Link href={'/sign-in'} className='border px-3 py-2 rounded'>Admin Login</Link>
       </div>
     </div>
   )

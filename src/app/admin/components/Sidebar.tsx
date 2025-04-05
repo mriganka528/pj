@@ -24,6 +24,9 @@ const Sidebar = () => {
     return (
         <div className='min-[768px]:hidden'>
             <Sheet >
+                <SheetTrigger>
+                    <PanelTopOpen className=' hover:text-foreground transition-colors' />
+                </SheetTrigger>
                 <SheetContent  side={'top'} className='flex dark:bg-transparent dark:backdrop-blur-sm flex-col items-center justify-center space-y-4 py-10'>
                     <SheetTitle className='text-3xl'>BulletinX</SheetTitle>
                     <ul className='flex flex-col  justify-between space-y-10 py-10'>

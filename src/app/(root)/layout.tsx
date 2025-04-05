@@ -6,10 +6,9 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const { userId} = await auth()
+    const { userId } = await auth()
     if (!userId) {
-        redirect('/sign-in')
-
+        return <div className="py-4">{children}</div>
     }
     const findAdmin = await prismadb.admin.findUnique({
         where: {
@@ -21,10 +20,5 @@ export default async function RootLayout({
     } else {
         redirect('/admin')
     }
-    return (
-        <>
-            {children}
-        </>
 
-    );
 }
