@@ -18,6 +18,7 @@ model Notice {
   priority    Priority
   admin       Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
   adminId     String
+  
 }
 
 enum Priority {
