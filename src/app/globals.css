@@ -106,3 +106,18 @@ html {
 .cl-internal-1hp5nqm{
   display: none;
 }
+.cl-internal-1p733cp{
+  @apply bg-slate-100 shadow-none px-[5rem] py-[3rem];
+  box-shadow: none;
+}
+@media screen and (max-width: 768px) {
+  .cl-internal-1p733cp{
+    @apply bg-slate-100 shadow-none px-[2rem] ;
+    box-shadow: none;
+  }
+  
+}
+.bg-signUP{
+  background: url('/assets/BG3.jpeg') ;
+  background-size:cover;
+}
