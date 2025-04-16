@@ -18,7 +18,6 @@ import {
     Download,
     Maximize,
     Minimize,
-    FileText,
     Loader2,
 } from "lucide-react"
 import GoBackComponent from "@/app/admin/content/components/GoBackComponent"

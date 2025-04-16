@@ -66,16 +66,6 @@ const NoticeDetailsComponent = ({ noticeDetails }: { noticeDetails: Notice }) =>
                 return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400"
         }
     }
-
-    //Format date
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        return new Intl.DateTimeFormat('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        }).format(date);
-    }
     const copyToClipboard = () => {
         navigator.clipboard.writeText(pathName);
         setCopied(true);
