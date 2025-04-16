@@ -27,7 +27,7 @@ export default function AuthLayout({
       </div>
       <div className="md:w-[45%]  h-full flex md:items-center justify-center ">
         <div className=" h-[80%] w-[80%] flex flex-col space-y-5 mt-10 md:mt-0 md:items-center justify-start md:justify-center">
-          <h1 className="text-center w-full text-4xl font-bold text-gray-700"> <UserPen className="inline-block h-8 w-8" />  Sign In</h1>
+          <h1 className="text-center w-full text-4xl font-bold text-gray-700"> <UserPen className="inline-block h-8 w-8 text-gray-700" />  Sign In</h1>
           <div className="w-full flex justify-center items-center">
             {children}
           </div>

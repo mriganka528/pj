@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 import { Prisma } from '@prisma/client'
-import { AlertCircle, FileText, FolderOpen, MoreHorizontal, PencilLine, ShieldQuestion, Trash2 } from 'lucide-react'
+import { AlertCircle, Eye, FileText, FolderOpen, MoreHorizontal, PencilLine, ShieldQuestion, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -49,7 +49,7 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                     <div className="space-y-1">
                         <CardTitle className="line-clamp-1">{notice.title}</CardTitle>
                         <CardDescription>
-                            {new Date(notice.dateCreated).toDateString()} • {notice.status}
+                            {new Date(notice.dateCreated).toDateString() + ", " + new Date(notice.dateCreated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {notice.status}
                         </CardDescription>
                     </div>
                     <div className=' flex justify-center items-center '>
@@ -82,6 +82,12 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuItem>
+                                        <Link className='flex justify-center items-center ' href={`/admin/notices/${notice.id}`}    >
+                                            <Eye className="mr-2 h-4 w-4" />
+                                            View Details
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
                                         <Link className='flex justify-center items-center ' href={`/admin/content/${notice.noticeURL.substring(notice.noticeURL.lastIndexOf("/") + 1)}`}    >
                                             <FileText className="mr-2 h-4 w-4" />
                                             View PDF
@@ -100,7 +106,9 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                 </div>
             </CardHeader>
             <CardContent>
-                <span className="text-sm text-muted-foreground line-clamp-3 mb-3">{notice.content}</span>
+                <span className="text-sm text-muted-foreground  mb-3 line-clamp-3 whitespace-pre-line"> <pre className="whitespace-pre-wrap  dark:text-gray-200">
+                    {notice.content}
+                </pre></span>
                 <div className="flex flex-wrap gap-2 mt-2">
                     <Badge variant="outline" className="flex items-center gap-1">
                         <FolderOpen className="h-3 w-3 mr-1" />
@@ -117,13 +125,13 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                                 <DialogDescription asChild>
                                     <div className=' flex flex-col space-y-7 mt-6'>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Admin Name</Label>  < Input id='name' defaultValue={`${notice.admin.firstName}${(notice.admin.middleName)?.length !== 0 ? `${notice.admin.middleName}` : ""}${notice.admin.lastName}`} disabled />
+                                            <Label>Admin Name</Label>  < Input id='name' defaultValue={`${notice.admin.firstName}${(notice.admin.middleName)?.length !== 0 ? `${notice.admin.middleName}` : ""}${notice.admin.lastName}`} readOnly />
                                         </div>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Email Address</Label>  < Input id='email' disabled defaultValue={notice.admin.email} />
+                                            <Label>Email Address</Label>  < Input id='email' defaultValue={notice.admin.email} readOnly />
                                         </div>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Admin Id</Label>  < Input id='id' disabled defaultValue={notice.adminId} />
+                                            <Label>Admin Id</Label>  < Input id='id' defaultValue={notice.adminId} readOnly />
                                         </div>
 
                                     </div>
