@@ -2,6 +2,12 @@ import SettingsComponent from "./components/SettingsComponent"
 import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import prismadb from "@/lib/prismadb"
+export function generateMetadata() {
+    return {
+        title: "Settings",
+        description: "Manage your account settings and preferences.",
+    }
+}
 const page = async () => {
     const { userId } = await auth()
     if (!userId) {

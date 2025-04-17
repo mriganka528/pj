@@ -29,6 +29,7 @@ import {
 import { usePathname, useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import toast from 'react-hot-toast'
+const NEXT_PUBLIC_APP_HOST_URL= process.env.NEXT_PUBLIC_APP_HOST_URL
 const NoticeDetailsComponent = ({ noticeDetails }: { noticeDetails: Notice }) => {
     const [copied, setCopied] = useState<boolean>(false)
     const router = useRouter()
@@ -36,7 +37,8 @@ const NoticeDetailsComponent = ({ noticeDetails }: { noticeDetails: Notice }) =>
     const handleGoBack = () => {
         router.back()
     }
-    const pathName = usePathname()
+    const currentUrl = usePathname()
+    const pathName = `${NEXT_PUBLIC_APP_HOST_URL}${currentUrl}`
     // Status badge colors
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -170,7 +172,7 @@ const NoticeDetailsComponent = ({ noticeDetails }: { noticeDetails: Notice }) =>
                                 </div>
                                 <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                                     <Clock className="mr-2 h-4 w-4" />
-                                    Last updated: {new Date(noticeDetails.dateUpdated).toDateString() + ", " + new Date(noticeDetails.dateUpdated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    Last updated: {new Date(noticeDetails.dateUpdated).toDateString() + ", " + new Date(noticeDetails.dateUpdated).toTimeString()}
                                 </div>
                             </div>
 

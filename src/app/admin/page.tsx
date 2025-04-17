@@ -11,6 +11,12 @@ import getTotalCategories from "@/lib/getTotalCategories"
 import { Category } from "@prisma/client"
 import getCategoryDetails from "@/lib/categoryDetails/getCategoryDetails"
 
+export function generateMetadata() {
+  return {
+    title: 'Dashboard',
+    description: 'Admin dashboard',
+  }
+}
 export default async function Dashboard() {
 
   const [

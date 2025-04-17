@@ -1,6 +1,12 @@
 import React from 'react'
 import UserManagement from './componenets/UserManagement'
 import prismadb from '@/lib/prismadb'
+export function generateMetadata() {
+    return {
+        title: "Subscription Management",
+        description: "Manage your notice board subscriptions.",
+    }
+}
 async function page() {
     const getSuscribedUsers = await prismadb.suscribedUser.findMany()
     return (

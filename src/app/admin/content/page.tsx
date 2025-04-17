@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 type NoticeWithAdmin = Prisma.NoticeGetPayload<{
   include: { admin: true };
 }>;
+
 const Page = () => {
   const [notices, setNotices] = useState<NoticeWithAdmin[]>([]);
   const [loading, setLoading] = useState(false);
