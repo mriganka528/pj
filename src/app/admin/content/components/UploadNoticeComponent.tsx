@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { PlusCircle, LoaderCircle } from "lucide-react"
+import { PlusCircle, LoaderCircle, FileText, X } from "lucide-react"
 import FileUpload from "@/components/FileUpload"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import axios from 'axios'
@@ -80,6 +80,11 @@ const UploadNoticeComponent = ({ setIsUploading }: { setIsUploading: React.Dispa
             setIsUploading(false)
         }
         setSubmitting(false)
+    }
+    const handleCancel = () => {
+        setSelectedFiles("");
+        form.setValue("fileUrl", "");
+        setIsUploading(false)
     }
     return (
         <div className="space-y-6 sm:px-12 md:px-20 sm:border sm:rounded-md mt-4 py-4 sm:py-16 sm:shadow-md md:dark:shadow-gray-800">
@@ -201,7 +206,28 @@ const UploadNoticeComponent = ({ setIsUploading }: { setIsUploading: React.Dispa
                                                 }
                                                 }
                                             />
-                                            <p className='text-gray-700 dark:text-gray-100'>{selectedFiles}</p>
+
+                                            {selectedFiles && (
+                                                <div className="flex items-center justify-between mt-3 p-3 bg-muted rounded-md">
+                                                    <div className="flex items-center gap-2 overflow-hidden">
+                                                        <FileText className="h-5 w-5 flex-shrink-0 text-muted-foreground" />
+                                                        <span className="text-sm font-medium truncate">{selectedFiles}</span>
+                                                    </div>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-8 w-8 rounded-full hover:bg-destructive/10 hover:text-destructive"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            handleCancel()
+                                                        }}
+                                                    >
+                                                        <X className="h-4 w-4" />
+                                                        <span className="sr-only">Remove file</span>
+                                                    </Button>
+                                                </div>
+                                            )}
+
                                         </div>
                                     </FormControl>
                                     <FormMessage />

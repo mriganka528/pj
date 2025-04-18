@@ -90,7 +90,7 @@ const PDFViewer: React.FC<Props> = ({ pdfUrl, fileName = "Document" }) => {
         <div
             ref={setContainerRef}
             className={`flex flex-col items-center transition-all duration-300 ease-in-out
-        ${isFullscreen ? "fixed inset-0 z-50 bg-background p-4" : "relative w-full"}
+        ${isFullscreen ? "fixed inset-0 bg-background p-4" : "relative w-full"}
         `}
         >
             {/* Header with file name */}

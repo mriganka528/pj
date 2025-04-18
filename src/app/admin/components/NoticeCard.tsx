@@ -121,7 +121,7 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                         </Badge></DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>Uploader Details</DialogTitle>
+                                <DialogTitle className='pb-4 text-center text-gray-600'>Uploader Details</DialogTitle>
                                 <DialogDescription asChild>
                                     <div className=' flex flex-col space-y-7 mt-6'>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
