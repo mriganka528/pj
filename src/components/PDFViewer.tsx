@@ -30,7 +30,16 @@ interface Props {
     fileName?: string
 }
 
+const getFileType = (url: string) => {
+    const extension = url.split('.').pop()?.toLowerCase()
+    if (!extension) return "unknown"
+    if (["pdf"].includes(extension)) return "pdf"
+    if (["jpg", "jpeg", "png", "webp", "gif", "bmp"].includes(extension)) return "image"
+    return "unknown"
+}
+
 const PDFViewer: React.FC<Props> = ({ pdfUrl, fileName = "Document" }) => {
+    const fileType = getFileType(pdfUrl)
     const [numPages, setNumPages] = useState<number | null>(null)
     const [pageNumber, setPageNumber] = useState(1)
     const [scale, setScale] = useState(1.0)
@@ -124,42 +133,47 @@ const PDFViewer: React.FC<Props> = ({ pdfUrl, fileName = "Document" }) => {
         ${theme === "dark" ? "bg-gray-800" : "bg-white"} 
         shadow-md transition-all duration-300`}
             >
-                {/* Previous Page */}
-                <Button
-                    onClick={() => changePage(-1)}
-                    disabled={pageNumber <= 1}
-                    variant="ghost"
-                    size="icon"
-                    className="hover:text-primary hover:bg-primary/10 transition-colors"
-                >
-                    <ChevronLeft className="h-5 w-5" />
-                </Button>
+                {fileType === "pdf" && (
 
-                {/* Page Input */}
-                <div className="flex items-center space-x-2">
-                    <Input
-                        type="number"
-                        min={1}
-                        max={numPages || 1}
-                        value={pageNumber}
-                        onChange={(e) => setPageNumber(Number(e.target.value))}
-                        className={`w-16 text-center ${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white"}`}
-                    />
-                    <span className="text-sm">of {numPages || "?"}</span>
-                </div>
+                    <div className="flex items-center space-x-2">
+                        {/* Previous Page */}
+                        <Button
+                            onClick={() => changePage(-1)}
+                            disabled={pageNumber <= 1}
+                            variant="ghost"
+                            size="icon"
+                            className="hover:text-primary hover:bg-primary/10 transition-colors"
+                        >
+                            <ChevronLeft className="h-5 w-5" />
+                        </Button>
 
-                {/* Next Page */}
-                <Button
-                    onClick={() => changePage(1)}
-                    disabled={numPages === null || pageNumber >= numPages}
-                    variant="ghost"
-                    size="icon"
-                    className="hover:text-primary hover:bg-primary/10 transition-colors"
-                >
-                    <ChevronRight className="h-5 w-5" />
-                </Button>
+                        {/* Page Input */}
+                        <div className="flex items-center space-x-2">
+                            <Input
+                                type="number"
+                                min={1}
+                                max={numPages || 1}
+                                value={pageNumber}
+                                onChange={(e) => setPageNumber(Number(e.target.value))}
+                                className={`w-16 text-center ${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white"}`}
+                            />
+                            <span className="text-sm">of {numPages || "?"}</span>
+                        </div>
 
-                <div className="h-6 border-l mx-1 border-gray-300 dark:border-gray-600"></div>
+                        {/* Next Page */}
+                        <Button
+                            onClick={() => changePage(1)}
+                            disabled={numPages === null || pageNumber >= numPages}
+                            variant="ghost"
+                            size="icon"
+                            className="hover:text-primary hover:bg-primary/10 transition-colors"
+                        >
+                            <ChevronRight className="h-5 w-5" />
+                        </Button>
+                    </div>
+                )}
+
+                <div className="h-6 border-l mx-1 border-gray-300 dark:border-gray-600 "></div>
 
                 {/* Zoom Out */}
                 <Button
@@ -171,7 +185,7 @@ const PDFViewer: React.FC<Props> = ({ pdfUrl, fileName = "Document" }) => {
                     <ZoomOut className="h-5 w-5" />
                 </Button>
 
-                <span className="text-sm font-medium w-16 text-center">{(scale * 100).toFixed(0)}%</span>
+                <span className="text-sm font-medium sm:w-16  text-center">{(scale * 100).toFixed(0)}%</span>
 
                 {/* Zoom In */}
                 <Button
@@ -196,43 +210,58 @@ const PDFViewer: React.FC<Props> = ({ pdfUrl, fileName = "Document" }) => {
                         <p className="text-sm text-muted-foreground">Loading document...</p>
                     </div>
                 )}
-
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={pageNumber}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        className="flex justify-center"
-                    >
-                        <Document
-                            file={pdfUrl}
-                            onLoadSuccess={onDocumentLoadSuccess}
-                            loading={
-                                <div className="flex flex-col items-center justify-center p-10">
-                                    <Skeleton className="h-[600px] w-[450px] rounded-md" />
-                                </div>
-                            }
-                            error={
-                                <div className="flex flex-col items-center justify-center p-10 text-red-500">
-                                    <p>Failed to load PDF. Please check the URL and try again.</p>
-                                </div>
-                            }
-                            className="mx-auto"
+                {fileType === "pdf" ? (
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={pageNumber}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex justify-center"
                         >
-                            <Page
-                                pageNumber={pageNumber}
-                                scale={scale}
-                                renderTextLayer={true}
-                                renderAnnotationLayer={true}
-                                className={`mx-auto shadow-xl rounded-md overflow-hidden
+                            <Document
+                                file={pdfUrl}
+                                onLoadSuccess={onDocumentLoadSuccess}
+                                loading={
+                                    <div className="flex flex-col items-center justify-center p-10">
+                                        <Skeleton className="h-[600px] w-[450px] rounded-md" />
+                                    </div>
+                                }
+                                error={
+                                    <div className="flex flex-col items-center justify-center p-10 text-red-500">
+                                        <p>Failed to load PDF. Please check the URL and try again.</p>
+                                    </div>
+                                }
+                                className="mx-auto"
+                            >
+                                <Page
+                                    pageNumber={pageNumber}
+                                    scale={scale}
+                                    renderTextLayer={true}
+                                    renderAnnotationLayer={true}
+                                    className={`mx-auto shadow-xl rounded-md overflow-hidden
                   ${theme === "dark" ? "bg-gray-700" : "bg-white"}`}
-                                loading={<Skeleton className="h-[600px] w-[450px] rounded-md" />}
-                            />
-                        </Document>
-                    </motion.div>
-                </AnimatePresence>
+                                    loading={<Skeleton className="h-[600px] w-[450px] rounded-md" />}
+                                />
+                            </Document>
+                        </motion.div>
+                    </AnimatePresence>
+                ) : fileType === "image" ? (
+                    <div className="flex justify-center">
+                        <img
+                            src={pdfUrl}
+                            alt={fileName}
+                            className="rounded shadow-md"
+                            style={{ transform: `scale(${scale})`, transition: "transform 0.3s ease" }}
+                            onLoad={() => setIsLoading(false)}
+                        />
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center justify-center p-10 text-red-500" onLoad={() => setIsLoading(false)}>
+                        <p>Unsupported file type. Please upload a PDF or image file.</p>
+                    </div>
+                )}
             </div>
 
             {/* Page thumbnails (optional) */}

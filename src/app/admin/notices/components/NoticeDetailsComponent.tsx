@@ -172,7 +172,7 @@ const NoticeDetailsComponent = ({ noticeDetails }: { noticeDetails: Notice }) =>
                                 </div>
                                 <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                                     <Clock className="mr-2 h-4 w-4" />
-                                    Last updated: {new Date(noticeDetails.dateUpdated).toDateString() + ", " + new Date(noticeDetails.dateUpdated).toTimeString()}
+                                    Last updated: {new Date(noticeDetails.dateUpdated).toDateString() + ", " + new Date(noticeDetails.dateUpdated).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'})}
                                 </div>
                             </div>
 

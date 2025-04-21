@@ -56,11 +56,16 @@ const Page = () => {
   const [openPriority, setOpenPriority] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const [selectedPriorities, setSelectedPriorities] = useState<Priority[]>([]);
+  const [selectedAdmins, setSelectedAdmins] = useState<string[]>([]);
   const [selectedTab, setSelectedTab] = useState("all");
   const [notices, setNotices] = useState<NoticeWithAdmin[]>([]);
   const [loading, setLoading] = useState(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
+  const uniqueAdmins = Array.from(new Map(notices.map((n) => [n.adminId, n.admin])).values());
+  console.log(uniqueAdmins)
+
+  //Toggle category selection
   const toggleCategory = (category: Category) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
@@ -77,12 +82,21 @@ const Page = () => {
         : [...prev, priority]
     );
   };
+
+  // Toggle admin selection
+  const toggleAdmin = (adminId: string) => {
+    setSelectedAdmins((prev) =>
+      prev.includes(adminId) ? prev.filter((id) => id !== adminId) : [...prev, adminId]
+    );
+  };
+
   // Clear filters
   const clearFilters = () => {
     setSelectedCategories([]);
     setSelectedPriorities([]);
     setSearchQuery("");
-    setDateRange(undefined)
+    setDateRange(undefined);
+    setSelectedAdmins([]);
   };
   useEffect(() => {
     const fetchNotices = async () => {
@@ -128,7 +142,9 @@ const Page = () => {
       (!dateRange.to && noticeDate >= dateRange.from) ||
       (dateRange.to && noticeDate >= dateRange.from && noticeDate <= dateRange.to)
 
-    return matchesSearch && matchesTab && matchesCategory && matchesPriority && matchesDateRange
+    const matchesAdmin = selectedAdmins.length === 0 || selectedAdmins.includes(notice.admin.id);
+
+    return matchesSearch && matchesTab && matchesCategory && matchesPriority && matchesDateRange && matchesAdmin;
   })
   // handle delete
   const handleDelete = async (notice_id: string) => {
@@ -247,7 +263,40 @@ const Page = () => {
               </Command>
             </PopoverContent>
           </Popover>
+          {/* Admin filter */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className="h-10 justify-between">
+                Admins
+                <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0" align="end">
+              <Command>
+                <CommandInput placeholder="Search admin..." />
+                <CommandList>
+                  <CommandEmpty>No admin found.</CommandEmpty>
+                  <CommandGroup>
+                    {uniqueAdmins.map((admin) => {
+                      const fullName = `${admin.firstName} ${admin.middleName ? admin.middleName + ' ' : ''}${admin.lastName}`;
+                      return (
+                        <CommandItem key={admin.id} onSelect={() => toggleAdmin(admin.id)}>
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              selectedAdmins.includes(admin.id) ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {fullName}
+                        </CommandItem>
+                      );
+                    })}
 
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
           {/* Date Range filter */}
           <Popover>
             <PopoverTrigger asChild>
@@ -275,13 +324,13 @@ const Page = () => {
                 selected={dateRange}
                 onSelect={setDateRange}
                 numberOfMonths={2}
-                disabled={(date) => date > new Date()} 
+                disabled={(date) => date > new Date()}
               />
             </PopoverContent>
           </Popover>
 
           {/* Clear Filters Button */}
-          {(selectedCategories.length > 0 || selectedPriorities.length > 0 || searchQuery || dateRange) && (
+          {(selectedCategories.length > 0 || selectedPriorities.length > 0 || searchQuery || dateRange || selectedAdmins.length > 0) && (
             <Button
               variant="ghost"
               size="icon"
@@ -307,7 +356,7 @@ const Page = () => {
         </div>
       )}
 
-      {/* Active Filters Display for */}
+      {/* Active Filters Display for priorities */}
       {selectedPriorities.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {
@@ -320,6 +369,25 @@ const Page = () => {
           }
         </div>
       )}
+      {/* Active Filters Display for admins */}
+      {selectedAdmins.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {selectedAdmins.map((adminId) => {
+            const admin = uniqueAdmins.find((a) => a.id === adminId);
+            if (!admin) return null;
+            const fullName = `${admin.firstName} ${admin.middleName ? admin.middleName + ' ' : ''}${admin.lastName}`;
+            return (
+              <Badge key={adminId} variant="secondary" className="flex items-center gap-1">
+                {fullName}
+                <X className="h-3 w-3 cursor-pointer" onClick={() => toggleAdmin(adminId)} />
+              </Badge>
+            );
+          })}
+        </div>
+      )}
+
+
+      {/* Active Filters Display for date range */}
       {dateRange && dateRange.from && (
         <div className="flex flex-wrap gap-2">
           <Badge variant="secondary" className="flex items-center gap-1">

@@ -53,7 +53,6 @@ export default function SettingsComponent({ registeredAdmins, userId }: Props) {
         </div>
 
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Sidebar for larger screens */}
           <motion.div
             variants={container}
             initial="hidden"

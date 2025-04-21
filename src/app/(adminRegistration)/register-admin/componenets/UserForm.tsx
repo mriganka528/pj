@@ -14,7 +14,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
-// Define the form schema with validation
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   middleName: z.string().optional(),
@@ -24,7 +23,6 @@ const formSchema = z.object({
 type UserFormValues = z.infer<typeof formSchema>;
 
 export default function UserForm() {
-  // Initialize the form with React Hook Form
   const [submitting, setIsSubmitting] = useState<boolean>(false);
   const router = useRouter()
 
@@ -59,8 +57,7 @@ export default function UserForm() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      {/* Decorative elements */}
+    <div className="mt-10 bg-slate-50 bg-background flex flex-col items-center justify-center p-4">
       <div className="absolute top-20 left-10 w-20 h-20 bg-blue-100 dark:bg-blue-900 rounded-full opacity-50 blur-xl" />
       <div className="absolute bottom-20 right-10 w-32 h-32 bg-purple-100 dark:bg-purple-900 rounded-full opacity-50 blur-xl" />
 
@@ -71,7 +68,7 @@ export default function UserForm() {
               src="/assets/undraw_authentication.svg"
               alt="Application Logo"
               fill
-              className="object-contain p-1"
+              className="object-contain p-1 h-[22rem] w-[22rem]"
             />
           </div>
           <h1 className="text-3xl font-bold text-center   dark:text-gray-200">
@@ -81,7 +78,7 @@ export default function UserForm() {
 
         <Card className="border border-border bg-card shadow-lg">
           <CardHeader className="pb-4">
-            <CardTitle className="text-xl text-center text-foreground">User Registration</CardTitle>
+            <CardTitle className="text-xl text-center text-foreground">Admin Registration</CardTitle>
             <CardDescription className="text-center px-4 text-muted-foreground">
               You haven&lsquo;t registered yourself yet. Please complete this form to continue your journey with us!
             </CardDescription>

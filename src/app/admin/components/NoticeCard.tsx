@@ -90,7 +90,7 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                                     <DropdownMenuItem>
                                         <Link className='flex justify-center items-center ' href={`/admin/content/${notice.noticeURL.substring(notice.noticeURL.lastIndexOf("/") + 1)}`}    >
                                             <FileText className="mr-2 h-4 w-4" />
-                                            View PDF
+                                            View Document
                                         </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem>

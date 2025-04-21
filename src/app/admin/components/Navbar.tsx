@@ -36,7 +36,7 @@ const Navbar = () => {
             hidden: { y: "-100%" },
         }}
             animate={hidden ? "hidden" : "visible"}
-            transition={{ duration: 0.35, ease: "easeInOut" }} className=" text-sm sm:text-base fixed bg-background border-b w-svw flex justify-between px-6 py-5 sm:py-6 shadow-sm dark:border-border">
+            transition={{ duration: 0.35, ease: "easeInOut" }} className=" text-sm sm:text-base fixed bg-background border-b w-svw flex justify-between px-6 py-5 sm:py-6 shadow-md rounded-b-xl dark:shadow-gray-900 dark:border-border">
             <Sidebar />
             <div >
                 <h1 className=" max-[768px]:hidden  text-xl md:text-2xl font-bold text-foreground">Admin Control Center</h1>

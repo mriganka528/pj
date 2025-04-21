@@ -7,7 +7,6 @@ export default async function RegistratinLayout({
     children: React.ReactNode;
 }>) {
     const { userId } = await auth()
-    console.log("UserId :", userId);
     if (!userId) {
         redirect('/sign-in')
 
