@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import DropdownMenu from "./DropdownMenu";
 import MobileNav from "./MobileNav";
+import Image from "next/image";
 
 export default function Header() {
   const videos = [
@@ -33,7 +34,7 @@ export default function Header() {
       />
 
       {/* Header */}
-      <header className=" absolute top-0 left-0 w-full bg-[#cdcccc] backdrop-blur-md shadow-md py-6 px-6 z-10 rounded-t-xl">
+      <header className=" absolute top-0 left-0 w-full bg-[#cdcccc] backdrop-blur-md shadow-md py-4 sm:py-3 px-6 z-10 rounded-t-xl">
         {/* Mobile navigation manu */}
         <div className="min-[768px]:hidden">
           <MobileNav />
@@ -47,9 +48,14 @@ export default function Header() {
           </nav>
 
           {/* Center - Logo */}
-          <h1 className="text-3xl font-extrabold tracking-wide text-gray-800">
-            <Link href="/">bulletin X</Link>
-          </h1>
+          <Link href="/" className="flex flex-col justify-center items-center">
+            <Image src="/assets/bulletein.png"
+              width={45}
+              height={45}
+              className="object-contain" />
+            <h1 className="font-bold ">BulletinX</h1>
+          </Link>
+
 
           {/* Right - Additional Links */}
           <div className="hidden md:flex space-x-8 text-gray-800 text-lg font-bold">

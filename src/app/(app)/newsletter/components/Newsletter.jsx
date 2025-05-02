@@ -96,7 +96,7 @@ export default function Newsletter({ suscribedUser }) {
           <div>
           </div>
           <div className="relative ">
-            <h2 className="text-6xl font-extrabold text-gray-800 text-center mb-6" style={{ fontFamily: "'Lora', serif" }}>
+            <h2 className=" text-4xl sm:text-6xl font-extrabold text-gray-800 text-center mb-6" style={{ fontFamily: "'Lora', serif" }}>
               Subscribe to Our Newsletter
             </h2>
 

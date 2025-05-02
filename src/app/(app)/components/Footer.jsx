@@ -10,10 +10,10 @@ export default function Footer() {
           <Image
             src="/assets/bulletein.png" // Ensure this path points to the Veritas shield image
             alt="bulletein x"
-            width={90}
-            height={90}
+            width={80}
+            height={80}
           />
-          <span className="text-4xl font-bold">bulletein X</span>
+          <span className="text-3xl sm:text-4xl font-bold">bulletein X</span>
         </div>
 
         {/* Center: Navigation Links */}

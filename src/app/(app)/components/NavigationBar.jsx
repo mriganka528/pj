@@ -2,9 +2,10 @@ import React from 'react'
 import DropdownMenu from './DropdownMenu'
 import MobileNav from './MobileNav'
 import Link from 'next/link'
+import Image from 'next/image'
 const NavigationBar = () => {
     return (
-        <header className=" mt-3 sm:mt-5 mx-4 bg-[#cdcccc] backdrop-blur-md shadow-md py-6 px-6  rounded-xl ">
+        <header className=" mt-3 sm:mt-5 mx-4 bg-[#cdcccc] backdrop-blur-md shadow-md py-4 sm:py-3  px-6  rounded-xl ">
             {/* Mobile navigation manu */}
             <div className="min-[768px]:hidden">
                 <MobileNav />
@@ -18,9 +19,14 @@ const NavigationBar = () => {
                 </nav>
 
                 {/* Center - Logo */}
-                <h1 className="text-3xl font-extrabold tracking-wide text-gray-800">
-                    <Link href="/">bulletin X</Link>
-                </h1>
+                <Link href="/" className="flex flex-col justify-center items-center">
+                    <Image src="/assets/bulletein.png"
+                        width={45}
+                        height={45}
+                        className="object-contain" />
+                    <h1 className="font-bold ">BulletinX</h1>
+                </Link>
+
 
                 {/* Right - Additional Links */}
                 <div className="hidden md:flex space-x-8 text-gray-800 text-lg font-bold">

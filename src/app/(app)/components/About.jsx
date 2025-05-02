@@ -151,7 +151,7 @@ export default function About() {
             </div>
 
             {/* Image */}
-            <div className="relative w-full h-175">
+            <div className="relative w-full h-full">
               <Image
                 src="/assets/FAQ.jpg"
                 alt="FAQ Illustration"
