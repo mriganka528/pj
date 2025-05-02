@@ -2,7 +2,7 @@ import prismadb from '@/lib/prismadb';
 import React from 'react';
 import AllNotices from './components/AllNotices';
 
-const Page = async ({ searchParams }: { searchParams?: { category?: string; priority?: string } }) => {
+const Page = async ({ searchParams }) => {
     const category = searchParams?.category;
     const priority = searchParams?.priority;
 
