@@ -144,7 +144,7 @@ export default function Newsletter({ suscribedUser }) {
 
               {/* Submit Button */}
               {
-                !isSubmitting ? (
+                isSubmitting ? (
                   <div className="flex items-center justify-center">
                     <RefreshCcw  className="animate-spin mr-1 text-gray-500  inline-block" size={24} /> <span className=" text-gray-500 ">Submitting...</span>
                   </div>
