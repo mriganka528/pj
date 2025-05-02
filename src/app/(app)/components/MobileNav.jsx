@@ -26,7 +26,7 @@ const MobileNav = () => {
     { name: "Home", link: "/", logo: <House className="inline-block mr-1.5 " /> },
     { name: "About", link: "/about", logo: <Info className="inline-block mr-1.5 " /> },
     { name: "Newsletter", link: "/newsletter", logo: <Newspaper className="inline-block mr-1.5 " /> },
-    { name: "Admin Login", link: "/admin", logo: <User className="inline-block mr-1.5 " /> },
+    { name: "Admin Login", link: "/sign-in", logo: <User className="inline-block mr-1.5 " /> },
   ]
   const subcategories = {
     Academic: [

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, User, MessageSquare, RefreshCw } from "lucide-react";
+import { Mail, User, MessageSquare, RefreshCcw } from "lucide-react";
 import Image from "next/image";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -144,8 +144,10 @@ export default function Newsletter({ suscribedUser }) {
 
               {/* Submit Button */}
               {
-                isSubmitting ? (
-                  <RefreshCw className="animate-spin text-gray-500 mx-auto" size={24} />
+                !isSubmitting ? (
+                  <div className="flex items-center justify-center">
+                    <RefreshCcw  className="animate-spin mr-1 text-gray-500  inline-block" size={24} /> <span className=" text-gray-500 ">Submitting...</span>
+                  </div>
                 ) : (
                   <button
                     type="submit"

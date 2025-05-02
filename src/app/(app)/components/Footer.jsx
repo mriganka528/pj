@@ -27,7 +27,7 @@ export default function Footer() {
           <Link href="/newsletter" className="hover:underline">
             Newsletter
           </Link>
-          <Link href="/admin" className="hover:underline">
+          <Link href="/sign-in" className="hover:underline">
             Are you admin?Login
           </Link>
 

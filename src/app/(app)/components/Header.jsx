@@ -59,7 +59,7 @@ export default function Header() {
 
           {/* Right - Additional Links */}
           <div className="hidden md:flex space-x-8 text-gray-800 text-lg font-bold">
-            <Link href="/admin">ADMIN LOGIN</Link>
+            <Link href="/sign-in">ADMIN LOGIN</Link>
             <Link href="/about">ABOUT</Link>
           </div>
         </div>
