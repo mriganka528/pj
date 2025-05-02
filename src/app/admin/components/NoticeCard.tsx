@@ -47,7 +47,7 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
             <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
                     <div className="space-y-1">
-                        <CardTitle className="line-clamp-1">{notice.title}</CardTitle>
+                        <CardTitle className="line-clamp-1 mb-2">{notice.title}</CardTitle>
                         <CardDescription>
                             {new Date(notice.dateCreated).toDateString() + ", " + new Date(notice.dateCreated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {notice.status}
                         </CardDescription>
@@ -125,7 +125,7 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                                 <DialogDescription asChild>
                                     <div className=' flex flex-col space-y-7 mt-6'>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
-                                            <Label>Admin Name</Label>  < Input id='name' defaultValue={`${notice.admin.firstName}${(notice.admin.middleName)?.length !== 0 ? `${notice.admin.middleName}` : ""}${notice.admin.lastName}`} readOnly />
+                                            <Label>Admin Name</Label>  < Input id='name' defaultValue={`${notice.admin.firstName}${(notice.admin.middleName)?.length !== 0 ? `${notice.admin.middleName}` : ""}${notice.admin.lastName}`} readOnly  />
                                         </div>
                                         <div className='flex flex-col space-y-1 justify-start items-start'>
                                             <Label>Email Address</Label>  < Input id='email' defaultValue={notice.admin.email} readOnly />

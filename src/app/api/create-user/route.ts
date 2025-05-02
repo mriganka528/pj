@@ -19,7 +19,7 @@ export async function POST(req: Request) {
         })
         if (existingUser) {
             return NextResponse.json({
-                success: false, message: "User with this email already exist"
+                success: false, message: "You have already suscribed to our newsletter"
             }, { status: 409 })
         }
         const newUser = await prismadb.suscribedUser.create({

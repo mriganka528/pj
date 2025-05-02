@@ -63,7 +63,6 @@ const Page = () => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
   const uniqueAdmins = Array.from(new Map(notices.map((n) => [n.adminId, n.admin])).values());
-  console.log(uniqueAdmins)
 
   //Toggle category selection
   const toggleCategory = (category: Category) => {

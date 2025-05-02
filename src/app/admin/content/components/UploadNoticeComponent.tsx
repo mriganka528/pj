@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { PlusCircle, LoaderCircle, FileText, X } from "lucide-react"
-import FileUpload from "@/components/FileUpload"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import axios from 'axios'
 import { noticeSchema } from '@/schemas/notice/noticeSchema'
@@ -15,6 +14,7 @@ import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import FileUpload from '../../components/FileUpload'
 
 const categories = [
     "Academic",

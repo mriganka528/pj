@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { LoaderCircle } from "lucide-react"
-import FileUpload from "@/components/FileUpload"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import axios from 'axios'
 import { noticeSchema } from '@/schemas/notice/noticeSchema'
@@ -16,6 +15,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { toast } from 'react-hot-toast'
 import { Notice } from '@prisma/client'
 import { useRouter } from 'next/navigation'
+import FileUpload from '@/app/admin/components/FileUpload'
 
 const categories = [
     "Academic",

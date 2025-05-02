@@ -1,6 +1,7 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import Footer from "../(app)/components/Footer";
 export default async function RootLayout({
     children,
 }: Readonly<{
@@ -8,7 +9,7 @@ export default async function RootLayout({
 }>) {
     const { userId } = await auth()
     if (!userId) {
-        return <div className="py-4">{children}</div>
+        return <div>{children} <Footer /></div>
     }
     const findAdmin = await prismadb.admin.findUnique({
         where: {

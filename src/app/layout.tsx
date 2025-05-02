@@ -26,9 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning className={poppins.variable}>
+      <html lang="en" suppressHydrationWarning >
         <head />
-        <body className="font-poppins">
+        <body className={`${poppins.variable} antialiased`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
