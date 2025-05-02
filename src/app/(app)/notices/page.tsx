@@ -11,7 +11,7 @@ interface PageProps {
 }
 
 const Page = async ({ searchParams }: PageProps) => {
-    const { category, priority } = await searchParams
+    const { category, priority } = searchParams
 
     const notices = await prismadb.notice.findMany(
         {
