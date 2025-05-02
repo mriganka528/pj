@@ -23,7 +23,7 @@ export default function TestimonialSection({ users }) {
         <div className="bg-gray-800 rounded-3xl shadow-xl p-10">
           <div className="text-center mb-9 flex items-center justify-center gap-3">
             <MessageSquare className="w-10 h-10 text-white" />
-            <h2 className="text-5xl font-extrabold text-white">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-white">
               What Our Users Say
             </h2>
           </div>

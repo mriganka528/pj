@@ -8,7 +8,7 @@ const page = async ({ params: paramsPromise }: { params: Promise<{ docId: string
 
     const pdfUrl = `${PDF_HOST_URL + params.docId}`
     return (
-        <div className='-z-10' >
+        <div className='-z-10 mt-6 sm:mt-0' >
             <PDFViewer pdfUrl={pdfUrl} />
         </div>
     )
