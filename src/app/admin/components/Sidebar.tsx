@@ -3,7 +3,6 @@ import {
     Sheet,
     SheetClose,
     SheetContent,
-    SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { Calendar, FileText, LayoutDashboard, PanelTopOpen, Settings, User } from 'lucide-react'

@@ -43,8 +43,8 @@ export default function Header() {
           {/* Left - Menu */}
           <nav className="hidden md:flex space-x-10 text-gray-800 text-lg font-bold">
             <DropdownMenu />
-            <Link href="/admin">ADMIN LOGIN</Link>
             <Link href="/">HOME</Link>
+            <Link href="/newsletter">NEWSLETTER</Link>
           </nav>
 
           {/* Center - Logo */}
@@ -59,7 +59,7 @@ export default function Header() {
 
           {/* Right - Additional Links */}
           <div className="hidden md:flex space-x-8 text-gray-800 text-lg font-bold">
-            <Link href="/newsletter">NEWSLETTER</Link>
+            <Link href="/admin">ADMIN LOGIN</Link>
             <Link href="/about">ABOUT</Link>
           </div>
         </div>
