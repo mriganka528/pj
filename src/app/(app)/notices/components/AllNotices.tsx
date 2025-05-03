@@ -244,7 +244,7 @@ const AllNotices: React.FC<AllNoticesProps> = ({ notices, totalnotices, category
                                     <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="end">
+                            <PopoverContent className="w-auto p-0" align="end"  side='bottom'    sideOffset={8}>
                                 <Calendar
                                     initialFocus
                                     mode="range"

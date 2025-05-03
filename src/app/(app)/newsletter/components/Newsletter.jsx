@@ -10,7 +10,6 @@ import MobileNav from "../../components/MobileNav";
 
 
 export default function Newsletter({ suscribedUser }) {
-  console.log("GZFG", suscribedUser);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,6 +35,7 @@ export default function Newsletter({ suscribedUser }) {
         toast.error(response.data.message);
       }
     } catch (error) {
+      
       console.log(error.response?.data?.message || "An error occurred. Please try again.");
 
     } finally {

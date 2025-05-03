@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -30,29 +31,29 @@ const MobileNav = () => {
   ]
   const subcategories = {
     Academic: [
-      { name: "Academic", icon: <NotebookPen size={100} />, link: "/notices?category=Academic" },
-      { name: "Final Exam", icon: <Book size={100} />, link: "/notices?category=FinalExam" },
-      { name: "Results", icon: <FileText size={100} />, link: "/notices?category=ExamResults" },
-      { name: "Revaluation", icon: <RefreshCcw size={100} />, link: "/notices?category=Revaluation" },
+      { name: "Academic", icon: <NotebookPen size={20} />, link: "/notices?category=Academic" },
+      { name: "Final Exam", icon: <Book size={20} />, link: "/notices?category=FinalExam" },
+      { name: "Results", icon: <FileText size={20} />, link: "/notices?category=ExamResults" },
+      { name: "Revaluation", icon: <RefreshCcw size={20} />, link: "/notices?category=Revaluation" },
     ],
     Priority: [
-      { name: "High Priority", icon: <AlertTriangle size={100} />, link: "/notices?priority=High" },
-      { name: "Medium Priority", icon: <MinusCircle size={100} />, link: "/notices?priority=Medium" },
-      { name: "Low Priority", icon: <CheckCircle size={100} />, link: "/notices?priority=Low" },
+      { name: "High Priority", icon: <AlertTriangle size={20} />, link: "/notices?priority=High" },
+      { name: "Medium Priority", icon: <MinusCircle size={20} />, link: "/notices?priority=Medium" },
+      { name: "Low Priority", icon: <CheckCircle size={20} />, link: "/notices?priority=Low" },
     ],
     Events: [
-      { name: "Sports", icon: <Medal size={100} />, link: "/notices?category=Sports" },
-      { name: "Career", icon: <Briefcase size={100} />, link: "/notices?category=Career" },
-      { name: "Health & Wellness", icon: <HeartPulse size={100} />, link: "/notices?category=HealthAndWellness" },
+      { name: "Sports", icon: <Medal size={20} />, link: "/notices?category=Sports" },
+      { name: "Career", icon: <Briefcase size={20} />, link: "/notices?category=Career" },
+      { name: "Health & Wellness", icon: <HeartPulse size={20} />, link: "/notices?category=HealthAndWellness" },
     ],
     Administrative: [
-      { name: "Student Life", icon: <GraduationCap size={100} />, link: "/notices?category=StudentServices" },
-      { name: "Library", icon: <BookOpen size={100} />, link: "/notices?category=Library" },
-      { name: "Campus Life", icon: <Home size={100} />, link: "/notices?category=CampusLife" },
-      { name: "Technology", icon: <Laptop size={100} />, link: "/notices?category=Technology" },
+      { name: "Student Life", icon: <GraduationCap size={20} />, link: "/notices?category=StudentServices" },
+      { name: "Library", icon: <BookOpen size={20} />, link: "/notices?category=Library" },
+      { name: "Campus Life", icon: <Home size={20} />, link: "/notices?category=CampusLife" },
+      { name: "Technology", icon: <Laptop size={20} />, link: "/notices?category=Technology" },
     ],
     "View More": [
-      { name: "More Options", icon: <MoreHorizontal size={100} />, link: "/notices" },
+      { name: "More Options", icon: <MoreHorizontal size={20} />, link: "/notices" },
     ],
   };
 
@@ -110,8 +111,10 @@ const MobileNav = () => {
                                 <div key={idx}>
                                   <DropdownMenuItem asChild className="bg-gray-50 p-3">
                                     <Link href={item.link} className="flex items-center gap-2">
-                                      {item.icon}
-                                      {item.name}
+                                      <SheetClose className="flex items-center gap-2">
+                                        {item.icon}
+                                        {item.name}
+                                      </SheetClose>
                                     </Link>
                                   </DropdownMenuItem>
                                   <DropdownMenuSeparator />
@@ -131,8 +134,10 @@ const MobileNav = () => {
                   {
                     navLinks.map((link, index) => (
                       <Link href={link.link} key={index} className="flex bg-gray-300 rounded-lg py-3 px-4  space-x-2" >
-                        {link.logo}
-                        {link.name}
+                        <SheetClose className="w-full flex space-x-2">
+                          {link.logo}
+                          {link.name}
+                        </SheetClose>
                       </Link>
                     ))
                   }
