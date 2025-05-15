@@ -23,7 +23,9 @@ const NavigationBar = () => {
                     <Image src="/assets/bulletein.png"
                         width={45}
                         height={45}
+                        alt="BulletinX Logo"
                         className="object-contain" />
+
                     <h1 className="font-bold ">BulletinX</h1>
                 </Link>
 
