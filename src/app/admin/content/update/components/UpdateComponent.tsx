@@ -19,6 +19,9 @@ import FileUpload from '@/app/admin/components/FileUpload'
 
 const categories = [
     "Academic",
+    "FinalExam",
+    "ExamResults",
+    "Revaluation",
     "Events",
     "StudentServices",
     "CampusLife",
