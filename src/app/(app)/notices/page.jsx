@@ -1,7 +1,12 @@
 import prismadb from '@/lib/prismadb';
 import React from 'react';
 import AllNotices from './components/AllNotices';
-
+export function generateMetadata() {
+    return {
+        title: "Notices",
+        description: "View notices and announcements",
+    }
+}
 const Page = async ({ searchParams }) => {
     const category = searchParams?.category;
     const priority = searchParams?.priority;

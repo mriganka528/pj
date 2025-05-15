@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { LoaderCircle } from "lucide-react"
+import { FileText, LoaderCircle, X } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import axios from 'axios'
 import { noticeSchema } from '@/schemas/notice/noticeSchema'
@@ -82,6 +82,10 @@ const UpdateNoticeComponent = ({ notice }: { notice: Notice }) => {
             router.back()
         }
         setSubmitting(false)
+    }
+    const handleCancel = () => {
+        setSelectedFiles("");
+        form.setValue("fileUrl", "");
     }
     return (
         <div className="space-y-6 ">
@@ -199,7 +203,26 @@ const UpdateNoticeComponent = ({ notice }: { notice: Notice }) => {
                                                 }
                                                 }
                                             />
-                                            <p>{selectedFiles}</p>
+                                            {selectedFiles && (
+                                                <div className="flex items-center justify-between mt-3 p-3 bg-muted rounded-md">
+                                                    <div className="flex items-center gap-2 overflow-hidden">
+                                                        <FileText className="h-5 w-5 flex-shrink-0 text-muted-foreground" />
+                                                        <span className="text-sm font-medium truncate">{selectedFiles}</span>
+                                                    </div>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-8 w-8 rounded-full hover:bg-destructive/10 hover:text-destructive"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            handleCancel()
+                                                        }}
+                                                    >
+                                                        <X className="h-4 w-4" />
+                                                        <span className="sr-only">Remove file</span>
+                                                    </Button>
+                                                </div>
+                                            )}
                                         </div>
                                     </FormControl>
                                     <FormMessage />
