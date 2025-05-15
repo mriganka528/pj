@@ -32,6 +32,7 @@ const page = async () => {
   const allEvenets = await prismadb.notice.findMany({
     where: {
       status: "ACTIVE",
+      category: "Events",
       dateCreated: {
         gte: monthStart,
         lte: monthEnd,
