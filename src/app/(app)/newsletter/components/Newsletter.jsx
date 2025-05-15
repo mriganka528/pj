@@ -10,7 +10,7 @@ import MobileNav from "../../components/MobileNav";
 
 
 export default function Newsletter({ suscribedUser }) {
-  const [formData, setFormData] = useState({
+   const [formData, setFormData] = useState({
     name: "",
     email: "",
     feedback: "",
@@ -83,7 +83,7 @@ export default function Newsletter({ suscribedUser }) {
           <nav className="flex-1 flex justify-end space-x-6 text-lg font-bold text-gray-800">
             <Link href="/">HOME</Link>
             <Link href="/about">ABOUT</Link>
-            <Link href="/login">LOGIN</Link>
+            <Link href="/sign-in">ADMIN LOGIN</Link>
           </nav>
         </div>
       </header>

@@ -328,8 +328,8 @@ const AllNotices: React.FC<AllNoticesProps> = ({ notices, totalnotices, category
                             </motion.div>
                         ))
                     ) : (
-                        <div className="col-span-3 flex  flex-col justify-center items-center  text-gray-500">
-                            <Image src={'/assets/NoResult_dark.png'} height={400} width={400} alt='No result' />
+                        <div className="col-span-3 flex  flex-col space-y-3 justify-center items-center  text-gray-500">
+                            <Image src={'/assets/undraw_mobile-search_macy.svg'} height={250} width={250} alt='No result' />
                             <span>No notice Found</span>
                         </div>
                     )

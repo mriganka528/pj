@@ -36,6 +36,9 @@ type NoticeWithAdmin = Prisma.NoticeGetPayload<{
 const Page = () => {
   const categories: { value: Category; label: string }[] = [
     { value: "Academic", label: "Academic" },
+    { value: "FinalExam", label: "FinalExam" },
+    { value: "ExamResults", label: "ExamResults" },
+    { value: "Revaluation", label: "Revaluation" },
     { value: "Events", label: "Events" },
     { value: "StudentServices", label: "Student Services" },
     { value: "CampusLife", label: "Campus Life" },
