@@ -7,10 +7,10 @@ import Image from "next/image";
 
 export default function Header() {
   const videos = [
-    "/assets/unibuilding.mp4",
+    // "/assets/unibuilding.mp4",
     "/assets/lib.mp4",
-    "/assets/uniground3.mp4",
-    "/assets/classroom.mp4",
+    // "/assets/uniground3.mp4",
+    // "/assets/classroom.mp4",
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -52,9 +52,9 @@ export default function Header() {
             <Image src="/assets/bulletein.png"
               width={45}
               height={45}
-              alt=" BulletinX Logo"
+              alt=" bulletinX Logo"
               className="object-contain" />
-            <h1 className="font-bold ">BulletinX</h1>
+            <h1 className="font-bold ">bulletinX</h1>
           </Link>
 
 
@@ -69,10 +69,10 @@ export default function Header() {
       {/* Hero Content */}
       <div className="absolute z-5 text-white text-center p-6 rounded-lg">
         <h2 className="text-5xl font-bold">Smart notices for a smarter YOU</h2>
-        <p className="mt-4 text-2xl">Welcome to bulletin X!</p>
-        <button className="mt-6 px-6 py-3 bg-gray-800 text-[#fffff] rounded-full shadow-md hover:bg-gray-200 font-bold">
+        <p className="mt-4 text-2xl mb-7">Welcome to bulletinX!</p>
+        <Link href={'/notices'} className="mt-6 px-6 py-3 bg-gray-800 text-[#fffff] rounded-full shadow-md hover:bg-gray-200 font-bold">
           VIEW NOW
-        </button>
+        </Link>
       </div>
     </section>
   );

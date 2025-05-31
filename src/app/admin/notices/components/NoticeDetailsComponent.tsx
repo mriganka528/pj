@@ -182,7 +182,7 @@ const NoticeDetailsComponent = ({ noticeDetails }: { noticeDetails: Notice }) =>
                                     href={`/admin/content/${noticeDetails.noticeURL.substring(noticeDetails.noticeURL.lastIndexOf("/") + 1)}`}
                                 >
                                     <FileText className="mr-2 h-4 w-4" />
-                                    View PDF
+                                    View Document
                                 </Link>
 
                                 <Popover>

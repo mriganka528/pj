@@ -2,8 +2,10 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from "@/components/ui/dialog"
 import { UserProfile } from "@clerk/clerk-react"
-import { Admin } from "@prisma/client"
+import { Admin, Subscriber } from "@prisma/client"
+import { DialogTitle } from "@radix-ui/react-dialog"
 import { Separator } from "@radix-ui/react-select"
 import axios from "axios"
 import { motion } from "framer-motion"
@@ -18,11 +20,17 @@ interface SettingsContentProps {
     tabId: string;
     registeredAdmins: (Admin & {
         _count: {
-            Notice: number; 
+            Notice: number;
         };
+        AdminSubscribedUser: {
+            adminId: string;
+            subscribedUserId: string;
+            subscriber: Subscriber;
+        }[];
     })[];
-    userId: string
+    userId: string;
 }
+
 
 const themeItems = [
     {
@@ -195,8 +203,59 @@ const SettingsContent = ({ tabId, theme, setTheme, registeredAdmins, userId }: S
                                                 </div>
                                             </div>
                                             <div className="flex sm:flex-col flex-wrap gap-3 text-sm">
-                                                <div className="rounded-md bg-secondary px-2 text-xs md:text-sm py-1">Id: {admin.id}</div>
-                                                <div className="rounded-md bg-secondary px-2 text-xs md:text-sm py-1">Notices Uploaded: {admin._count.Notice }</div>
+                                                <div className="rounded-md bg-secondary px-2 text-[.75rem] py-1">Notices Uploaded: {admin._count.Notice}</div>
+                                                <Dialog>
+                                                    <DialogTrigger asChild>
+                                                        <motion.button
+                                                            whileHover={{ scale: 1.02 }}
+                                                            whileTap={{ scale: 0.98 }}
+                                                            className="text-[.75rem] px-3 py-1 rounded-md bg-blue-100 text-blue-600 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50 transition-colors"
+                                                        >
+                                                            View Messages({admin.AdminSubscribedUser.length})
+                                                        </motion.button>
+                                                    </DialogTrigger>
+                                                    <DialogContent className="max-w-md">
+                                                        <DialogHeader>
+                                                            <DialogTitle>Custom Messages Sent</DialogTitle>
+                                                            <DialogDescription>
+                                                                Users who received custom messages from{" "}
+                                                                <span className="font-medium">
+                                                                    {admin.firstName} {admin.middleName && `${admin.middleName} `} {admin.lastName}
+                                                                </span>
+                                                            </DialogDescription>
+
+                                                        </DialogHeader>
+                                                        <div className="space-y-3 max-h-60 overflow-y-auto">
+                                                            {admin.AdminSubscribedUser.map((user, userIndex) => (
+                                                                <motion.div
+                                                                    key={user.subscriber.email}
+                                                                    initial={{ opacity: 0, x: -20 }}
+                                                                    animate={{ opacity: 1, x: 0 }}
+                                                                    transition={{ delay: userIndex * 0.1 }}
+                                                                    className="flex items-center gap-3 p-2 rounded-md border bg-accent/20"
+                                                                >
+                                                                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                                                                        <span className="text-xs font-bold text-primary">
+                                                                            {user.subscriber.name
+                                                                                .split(" ")
+                                                                                .map((n) => n[0])
+                                                                                .join("")}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="flex-1 min-w-0">
+                                                                        <p className="font-medium text-sm truncate">{user.subscriber.name}</p>
+                                                                        <p className="text-xs text-muted-foreground truncate">{user.subscriber.email}</p>
+                                                                    </div>
+                                                                </motion.div>
+                                                            ))}
+                                                            {admin.AdminSubscribedUser.length === 0 && (
+                                                                <p className="text-center text-muted-foreground text-sm py-4">
+                                                                    No custom messages sent yet
+                                                                </p>
+                                                            )}
+                                                        </div>
+                                                    </DialogContent>
+                                                </Dialog>
                                                 <motion.div whileHover={{ scale: 1.01 }}
                                                     whileTap={{ scale: 0.98 }} className="flex justify-end">{
                                                         (loading && admin.clerkId == userId) ? <Loader2 className=" animate-spin text-red-800" /> : (
@@ -205,7 +264,7 @@ const SettingsContent = ({ tabId, theme, setTheme, registeredAdmins, userId }: S
                                                                     <Button
                                                                         disabled={admin.clerkId !== userId}
                                                                         size={"sm"}
-                                                                        className="text-sm rounded-md bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors"
+                                                                        className="text-[.75rem] rounded-md bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors"
                                                                     >
                                                                         Remove Registration
                                                                     </Button>

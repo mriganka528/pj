@@ -8,7 +8,7 @@ export function generateMetadata() {
   }
 }
 const page = async () => {
-  const suscribedUser = await prismadb.suscribedUser.findMany()
+  const suscribedUser = await prismadb.subscriber.findMany()
   return (
     <div>
       <Newsletter suscribedUser={suscribedUser} />

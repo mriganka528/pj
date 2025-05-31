@@ -9,9 +9,9 @@ export default function AuthLayout({
 
     <div className="w-svw h-svh bg-signUP  flex fleex-col md:flex-row flex-col items-center justify-center  ">
       <div className="w-svw md:w-[55%] h-[50%] md:h-full flex flex-col items-center shadow-lg bg-gray-50 rounded-b-[40%] md:rounded-l-[0%] md:rounded-r-[25%] ">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mt-7 md:mt-10 text-center text-gray-700 ">BulletinX</h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mt-7 md:mt-10 text-center text-gray-700 ">bulletinX</h1>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mt-14 md:mt-20 bg-[linear-gradient(116deg,_#222F3D,_#bdc4e5)] bg-clip-text text-transparent ">
-          Ready to Power Up BulletinX?
+          Ready to Power Up bulletinX?
         </h1>
         <div className=" max-[768px]:hidden flex flex-col  my-5 md:mt-20 pl-9">
           <p className=" text-base md:text-2xl text-start mt-5 md:mt-10 text-gray-600">

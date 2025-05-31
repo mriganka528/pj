@@ -3,7 +3,6 @@ import Header from "@/app/(app)/components/Header";
 import NoticeTicker from "@/app/(app)/components/NoticeTicker";
 import TestimonialSection from "@/app/(app)/components/TestimonialSection";
 import Events from "@/app/(app)/components/Events";
-import Stats from "@/app/(app)/components/Stats";
 import { startOfWeek, endOfWeek, subWeeks, startOfMonth, endOfMonth } from 'date-fns';
 import prismadb from '@/lib/prismadb';
 
@@ -41,14 +40,14 @@ const page = async () => {
   })
   //get user feedbacks about the app
 
-  const users = await prismadb.suscribedUser.findMany();
+  const users = await prismadb.subscriber.findMany();
   return (
     <div>
       <NoticeTicker notices={currentWeekHighPriorityNotices} />
       <div className="mb-16">
         <Header />
       </div>
-      <Stats />
+      {/* <Stats /> */}
       <Events allEvenets={allEvenets} />
       <TestimonialSection users={users} />
     </div>

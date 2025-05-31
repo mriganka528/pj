@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText, User, ChartBarStacked, ShieldCheck, CalendarCheck, GraduationCap, School, BookOpenCheck, HeartPulse, LibraryBig, Medal, HandHelping, Cpu, } from "lucide-react"
+import { FileText, User, ChartBarStacked, ShieldCheck, CalendarCheck, GraduationCap, School, BookOpenCheck, HeartPulse, LibraryBig, Medal, HandHelping, Cpu, School2, ChartSpline, } from "lucide-react"
 import { NoticeChart } from "./components/NoticeChart"
 import getTotalNotice from "@/lib/getTotalNotice"
 import getNoticeUploadGrowth from "@/lib/getNoticeUploadGrowth"
@@ -36,12 +36,25 @@ export default async function Dashboard() {
     getTotalScheduledNotice(),
     getTotalCategories(),
   ])
-  
+
   const categoryManu = [
     {
       name: Category.Academic,
       icon: GraduationCap
-    }, {
+    },
+    {
+      name: Category.ExamResults,
+      icon: BookOpenCheck
+    },
+    {
+      name: Category.FinalExam,
+      icon: School2
+    },
+    {
+      name: Category.Revaluation,
+      icon: ChartSpline
+    },
+    {
       name: Category.Administrative,
       icon: ShieldCheck
     }, {

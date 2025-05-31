@@ -9,11 +9,11 @@ export default function Footer() {
         <div className="flex items-center space-x-4">
           <Image
             src="/assets/bulletein.png" // Ensure this path points to the Veritas shield image
-            alt="bulletein x"
+            alt="bulletinX"
             width={80}
             height={80}
           />
-          <span className="text-4xl font-bold">bulletein X</span>
+          <span className="text-4xl font-bold">BulleteinX</span>
         </div>
 
         {/* Center: Navigation Links */}
@@ -70,7 +70,7 @@ export default function Footer() {
 
       {/* Bottom: Legal Notice */}
       <div className="mt-6 text-center text-xs text-gray-700">
-        © 2025 The President and Fellows of bulletein X
+        © 2025 The President and Fellows of bulletinX
       </div>
     </footer>
   );

@@ -17,11 +17,17 @@ const page = async () => {
         include: {
             _count: {
                 select: {
-                    Notice: true
-                }
-            }
-        }
-    })
+                    Notice: true,
+                },
+            },
+            AdminSubscribedUser: {
+                include: {
+                    subscriber: true, 
+                },
+            },
+        },
+    });
+
     return (
         <div>
             <SettingsComponent registeredAdmins={registeredAdmins} userId={userId} />

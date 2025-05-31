@@ -62,7 +62,7 @@ export default function Newsletter({ suscribedUser }) {
           {/* Left - Site Name */}
           <div className="flex-1">
             <Link href="/" className="text-4xl font-extrabold text-gray-800">
-              bulletin X
+              bulletinX
             </Link>
           </div>
 

@@ -12,18 +12,18 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
-import { SuscribedUser } from '@prisma/client'
+import { Subscriber } from '@prisma/client'
 import { useMobile } from './UseMobile'
 import axios from 'axios'
 import { AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialog, AlertDialogContent, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import toast from 'react-hot-toast'
-const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) => {
-    const [users, setUsers] = useState<SuscribedUser[]>([])
-    const [filteredUsers, setFilteredUsers] = useState<SuscribedUser[]>([])
+const UserManagement = ({ subscriber }: { subscriber: Subscriber[] }) => {
+    const [users, setUsers] = useState<Subscriber[]>([])
+    const [filteredUsers, setFilteredUsers] = useState<Subscriber[]>([])
     const [searchQuery, setSearchQuery] = useState("")
     const [monthFilter, setMonthFilter] = useState<string>("all")
     const [loading, setLoading] = useState(true)
-    const [selectedUser, setSelectedUser] = useState<SuscribedUser | null>(null)
+    const [selectedUser, setSelectedUser] = useState<Subscriber | null>(null)
     const [emailContent, setEmailContent] = useState<string>("")
     const [emailSubject, setEmailSubject] = useState<string>("")
     const [isDeleting, setIsDeleating] = useState<boolean>(false)
@@ -38,8 +38,8 @@ const UserManagement = ({ suscribedUser }: { suscribedUser: SuscribedUser[] }) =
     // Simulate loading data
     useEffect(() => {
         const timer = setTimeout(() => {
-            setUsers(suscribedUser)
-            setFilteredUsers(suscribedUser)
+            setUsers(subscriber)
+            setFilteredUsers(subscriber)
             setLoading(false)
         }, 1000)
 

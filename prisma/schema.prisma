@@ -50,20 +50,32 @@ enum Category {
   Administrative
 }
 
-model SuscribedUser {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  createdAt DateTime @default(now())
-  feedback  String
+model Subscriber {
+  id                  String                @id @default(uuid())
+  name                String
+  email               String                @unique
+  createdAt           DateTime              @default(now())
+  feedback            String
+  AdminSubscribedUser AdminSubscribedUser[]
 }
 
 model Admin {
-  id         String   @id @default(uuid())
-  firstName  String
-  middleName String?
-  lastName   String
-  email      String   @unique
-  clerkId    String   @unique
-  Notice     Notice[]
+  id                  String                @id @default(uuid())
+  firstName           String
+  middleName          String?
+  lastName            String
+  email               String                @unique
+  clerkId             String                @unique
+  Notice              Notice[]
+  AdminSubscribedUser AdminSubscribedUser[]
+}
+
+model AdminSubscribedUser {
+  adminId          String
+  subscribedUserId String
+
+  admin      Admin      @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  subscriber Subscriber @relation(fields: [subscribedUserId], references: [id], onDelete: Cascade)
+
+  @@id([adminId, subscribedUserId])
 }

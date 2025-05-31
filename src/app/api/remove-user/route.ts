@@ -26,7 +26,7 @@ export async function DELETE(req: Request) {
         }
 
         // Check if notice exists
-        const existingNotice = await prismadb.suscribedUser.findUnique({
+        const existingNotice = await prismadb.subscriber.findUnique({
             where: { id: user_id },
         });
 
@@ -38,7 +38,7 @@ export async function DELETE(req: Request) {
         }
 
         // Delete notice
-        const deletedNotice = await prismadb.suscribedUser.delete({
+        const deletedNotice = await prismadb.subscriber.delete({
             where: { id: user_id },
         });
 

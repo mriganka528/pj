@@ -12,7 +12,7 @@ export async function POST(req: Request) {
             );
         }
         const { name, email, feedback } = body
-        const existingUser = await prismadb.suscribedUser.findUnique({
+        const existingUser = await prismadb.subscriber.findUnique({
             where: {
                 email
             }
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
                 success: false, message: "You have already suscribed to our newsletter"
             }, { status: 409 })
         }
-        const newUser = await prismadb.suscribedUser.create({
+        const newUser = await prismadb.subscriber.create({
             data: {
                 name,
                 email,

@@ -2,7 +2,7 @@
 import prismadb from "./prismadb"
 
 const getSubscribedUser = async () => {
-    const totalSubscribedUser = await prismadb.suscribedUser.count()
+    const totalSubscribedUser = await prismadb.subscriber.count()
     return totalSubscribedUser
 }
 export default getSubscribedUser
