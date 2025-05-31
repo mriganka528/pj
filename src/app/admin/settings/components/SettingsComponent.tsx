@@ -9,12 +9,17 @@ import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import SettingsContent from "./SettingsContent"
 import { SignOutButton } from "@clerk/nextjs"
-import { Admin } from "@prisma/client"
+import { Admin, Subscriber } from "@prisma/client"
 interface Props {
   registeredAdmins: (Admin & {
     _count: {
-      Notice: number; 
+      Notice: number;
     };
+    AdminSubscribedUser: {
+      adminId: string;
+      subscribedUserId: string;
+      subscriber: Subscriber;
+    }[];
   })[];
   userId: string;
 }
