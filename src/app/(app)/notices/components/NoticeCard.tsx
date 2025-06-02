@@ -24,7 +24,7 @@ const NoticeCard = ({ notice }: { notice: Notice }) => {
     }
 
     return (
-        <Card className={cn("transition-all hover:shadow-md", "border-l-4 border-l-[#9e9a9a]")}>
+        <Card className={cn("transition-all hover:shadow-md", "border-l-4 border-l-[#9e9a9a] ")}>
             <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
                     <div className="space-y-1">
@@ -62,15 +62,15 @@ const NoticeCard = ({ notice }: { notice: Notice }) => {
                 </div>
             </CardHeader>
             <CardContent>
-                <span className=" mt-5 rounded-md text-sm text-muted-foreground  line-clamp-3 whitespace-pre-line"> <pre className="whitespace-pre-wrap  dark:text-gray-200  ">
+                <span className=" mt-5 rounded-md text-sm text-muted-foreground  line-clamp-3 whitespace-pre-line  break-words overflow-hidden  dark:text-gray-200"> 
                     {notice.content}
-                </pre></span>
+                </span>
             </CardContent>
             <CardFooter className="flex justify-between pt-1 space-x-1">
 
                 <div className="flex flex-wrap gap-2 mt-2">
                     <Badge variant="outline" className="flex items-center gap-1">
-                        <FolderOpen className="h-3 w-3 mr-1" />
+                        <FolderOpen className="h-3 w-3 mr-1" /> 
                         {notice.category}
                     </Badge>
                 </div>
