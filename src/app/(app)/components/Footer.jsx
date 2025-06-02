@@ -13,7 +13,7 @@ export default function Footer() {
             width={80}
             height={80}
           />
-          <span className="text-4xl font-bold">BulleteinX</span>
+          <span className="text-4xl font-bold">bulletinX</span>
         </div>
 
         {/* Center: Navigation Links */}

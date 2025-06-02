@@ -84,7 +84,7 @@ const MobileNav = () => {
                   height={70}
                   className="object-contain"
                 />
-                <h1 className="font-bold text-lg text-center">Bulletein X</h1>
+                <h1 className="font-bold text-lg text-center">bulleteinX</h1>
 
               </Link>
             </SheetTitle>
