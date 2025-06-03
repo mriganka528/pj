@@ -12,7 +12,7 @@ export async function sendMail(
 ) {
 
     try {
-
+        console.log("Sending email to:", email);
         const transporter = nodemailer.createTransport({
             service: "gmail",
             host: "smtp.gmail.email",

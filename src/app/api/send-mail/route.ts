@@ -57,7 +57,6 @@ export async function POST(request: Request) {
 
         // Send email
         const EmailResponse = await sendMail(emailAddress, subject, message);
-
         if (EmailResponse.status === 250) {
             // Check if the relationship already exists
             const existingRelation = await prismadb.adminSubscribedUser.findFirst({

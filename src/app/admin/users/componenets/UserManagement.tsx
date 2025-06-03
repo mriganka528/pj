@@ -79,10 +79,9 @@ const UserManagement = ({ subscriber }: { subscriber: Subscriber[] }) => {
                 subject: emailSubject,
                 message: emailContent
             });
-
+             console.log(response.data);
             if (response.status === 200) {
                 toast.success("Notification is sent successfully");
-                setIsDialogOpen(false); // Close the dialog after successful email sending
             }
         } catch (error) {
             console.error(error);
