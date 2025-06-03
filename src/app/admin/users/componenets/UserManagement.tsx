@@ -240,18 +240,18 @@ const UserManagement = ({ subscriber }: { subscriber: Subscriber[] }) => {
                                             })}
                                         </Badge>
                                         <div>
-                                            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                                                <DialogTrigger asChild >
+                                            <Dialog>
+                                                <DialogTrigger asChild>
                                                     <Button
                                                         size="icon"
                                                         variant="ghost"
                                                         onClick={() => {
-                                                            setSelectedUser(user);
-                                                            setIsDialogOpen(true); // Open the dialog when clicking the button
+                                                            setSelectedUser(user)
+                                                            setEmailSubject("")
+                                                            setEmailContent("")
                                                         }}
                                                     >
                                                         <Mail className="h-4 w-4" />
-                                                        <span className="sr-only">Email {user.name}</span>
                                                     </Button>
                                                 </DialogTrigger>
                                                 <DialogContent>
@@ -290,11 +290,19 @@ const UserManagement = ({ subscriber }: { subscriber: Subscriber[] }) => {
                                                                 Sending...
                                                             </>
                                                         ) : (
-                                                            <Button onClick={handleSendEmail}>Send Email</Button>
+                                                            <Button
+                                                                onClick={() => {
+                                                                    setSelectedUser(user)
+                                                                    handleSendEmail()
+                                                                }}
+                                                            >
+                                                                Send Email
+                                                            </Button>
                                                         )}
                                                     </DialogFooter>
                                                 </DialogContent>
                                             </Dialog>
+
                                             <a
                                                 href={getGmailUrl(user.email)}
                                                 target="_blank"

@@ -36,7 +36,7 @@ const Sidebar = () => {
                             height={70}
                             className="object-contain"
                         />
-                        <h1 className="font-bold text-lg text-center">Bulletein X</h1>
+                        <h1 className="font-bold text-lg text-center">bulleteinX</h1>
 
                     </Link>
                     <ul className='flex flex-col  justify-between space-y-10 py-10'>

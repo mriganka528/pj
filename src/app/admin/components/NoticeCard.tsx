@@ -106,9 +106,9 @@ const NoticeCard = ({ notice, onDelete }: { notice: NoticeWithAdmin; onDelete: (
                 </div>
             </CardHeader>
             <CardContent>
-                <span className="text-sm text-muted-foreground  mb-3 line-clamp-3 whitespace-pre-line"> <pre className="whitespace-pre-wrap  dark:text-gray-200">
+                <span className="text-sm text-muted-foreground  mb-3 line-clamp-3 whitespace-pre-line break-words  dark:text-gray-200"> 
                     {notice.content}
-                </pre></span>
+               </span>
                 <div className="flex flex-wrap gap-2 mt-2">
                     <Badge variant="outline" className="flex items-center gap-1">
                         <FolderOpen className="h-3 w-3 mr-1" />
