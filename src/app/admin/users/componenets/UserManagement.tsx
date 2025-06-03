@@ -28,7 +28,6 @@ const UserManagement = ({ subscriber }: { subscriber: Subscriber[] }) => {
     const [emailSubject, setEmailSubject] = useState<string>("")
     const [isDeleting, setIsDeleating] = useState<boolean>(false)
     const [isSending, setIsSending] = useState<boolean>(false)
-    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const isMobile = useMobile()
 
     // Generate Gmail URL for sending email
